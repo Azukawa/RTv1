@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:01:59 by eniini            #+#    #+#             */
-/*   Updated: 2021/08/13 10:30:11 by eniini           ###   ########.fr       */
+/*   Updated: 2021/09/28 21:39:12 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	add_tga_to_rf(t_rf *rf, const char *asset)
 *	resource file. Returns an [imgdata] pointer to translated image data
 *	or NULL on failure.
 */
-t_imgdata	*load_tga_from_rf(t_rf *rf, short lump_id)
+t_img	*load_tga_from_rf(t_rf *rf, short lump_id)
 {
 	int				fd;
 	unsigned char	h[RF_HEADERSIZE];
@@ -66,5 +66,7 @@ t_imgdata	*load_tga_from_rf(t_rf *rf, short lump_id)
 		ft_getout("Failed to find TGA lump position in RF!");
 	l_count = get_charray_value(&h[RF_LUMPCOUNT_POSITION], (sizeof(off_t)));
 	l_totalsize = get_charray_value(&h[RF_LUMPLIST_OFFSET], (sizeof(off_t)));
+	ft_printf("Resourcefile loaded with [%ld] lumps", l_count);
+	ft_printf(" with a total size of [%ld] bytes\n", l_totalsize);
 	return (rf_load_tga_lump(rf, lump_id));
 }

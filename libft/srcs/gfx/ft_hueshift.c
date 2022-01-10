@@ -6,9 +6,11 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:31:07 by eniini            #+#    #+#             */
-/*   Updated: 2021/05/14 19:04:49 by eniini           ###   ########.fr       */
+/*   Updated: 2021/09/28 21:55:13 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_gfx.h"
 
 /*
 **	Since RGB values effectively form a cube of color space, we're able to
@@ -22,8 +24,6 @@
 **	result in values outside a 255³.
 */
 
-#include "ft_gfx.h"
-
 int	ft_hueshift(int c, double p)
 {
 	t_rgb_mat	mat;
@@ -31,8 +31,8 @@ int	ft_hueshift(int c, double p)
 	int			gx;
 	int			bx;
 
-	mat.cos_a = cos(p * RAD_CON);
-	mat.sin_a = sin(p * RAD_CON);
+	mat.cos_a = cos(p * DEG_TO_RAD);
+	mat.sin_a = sin(p * DEG_TO_RAD);
 	mat.axis_unit = sqrt(1. / 3.);
 	mat.rix[0][0] = mat.cos_a + (1.0 - mat.cos_a) / 3.0;
 	mat.rix[0][1] = 1. / 3. * (1.0 - mat.cos_a) - mat.axis_unit * mat.sin_a;

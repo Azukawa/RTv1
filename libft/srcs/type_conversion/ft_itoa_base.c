@@ -3,91 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: esormune <esormune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/28 21:34:05 by eniini            #+#    #+#             */
-/*   Updated: 2021/04/21 11:50:35 by eniini           ###   ########.fr       */
+/*   Created: 2020/08/17 14:48:20 by esormune          #+#    #+#             */
+/*   Updated: 2021/04/29 03:21:56 by esormune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-**	Returns a string representation of integer [i] written in base[x].
-**	Bases over 36 are unsupported, as ones larger are represented with
-**	a different formula. Same goes for bases smaller than 2 (unary coding).
-**
-**	(Note: Specific cases like Base64 should use their own itoa variant.)
-*/
-
-static int	convert_hex(intmax_t n, int base, t_bool lcase)
+static char	*ft_save(long nb, int neg, int base, int i)
 {
-	char	cval;
+	char	*str;
+	char	*save;
+	char	temp[32 + 1];
+	int		x;
 
-	if (lcase)
-		cval = 'a';
-	else
-		cval = 'A';
-	if (n % base >= 10)
-		return (n % base - 10 + cval);
-	else
-		return (n % base + '0');
-}
-
-static int	get_len(intmax_t n, int base)
-{
-	int		len;
-
-	len = 1;
-	if (n < 0 && len++)
+	x = 0;
+	str = "0123456789ABCDEF";
+	while (nb > 0)
 	{
-		n = -n;
-		len++;
+		temp[i] = str[nb % base];
+		nb = nb / base;
+		i++;
 	}
-	while (n >= (long)base)
-	{
-		n /= base;
-		len++;
-	}
-	return (len);
-}
-
-static char	*get_str(intmax_t n, int base, t_bool lcase, int len)
-{
-	char	*s;
-
-	s = ft_strnew(len);
-	if (!s)
+	if (neg == -1 && base == 10)
+		temp[i++] = '-';
+	temp[i] = '\0';
+	save = (char *)malloc(sizeof(char) * i + 1);
+	if (!(save))
 		return (NULL);
-	if (n < 0)
-	{
-		s[0] = '-';
-		n = -n;
-	}
-	while (1)
-	{
-		s[--len] = convert_hex(n, base, lcase);
-		n /= base;
-		if (n == 0)
-			break ;
-	}
-	return (s);
+	i = i - 1;
+	while (i >= 0)
+		save[x++] = temp[i--];
+	save[x] = '\0';
+	return (save);
 }
 
-char	*ft_itoa_base(intmax_t n, int base, t_bool lcase)
+char	*ft_itoa_base(int value, int base)
 {
-	char	*s;
-	int		len;
+	char	*save;
+	long	nb;
+	int		neg;
 
-	if (base > 36 || base < 2)
+	if (base < 2 || base > 16)
 		return (NULL);
-	if (n == INTMAX_MIN)
+	nb = value;
+	neg = ft_is_neg_minus(nb);
+	if (nb < 0)
+		nb = nb * (-1);
+	if (nb == 0)
 	{
-		s = ft_strdup("-9223372036854775808");
-		if (!s)
+		save = (char *)malloc(sizeof(char) * 2);
+		if (!(save))
 			return (NULL);
-		return (s);
+		save[0] = '0';
+		save[1] = '\0';
+		return (save);
 	}
-	len = get_len(n, base);
-	return (get_str(n, base, lcase, len));
+	return (ft_save(nb, neg, base, 0));
 }
