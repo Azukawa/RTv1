@@ -3,25 +3,42 @@
 
 # include <stdint.h>
 
+//WINDOW
+# define WIN_W 800
+# define WIN_H 600
+# define WIN_HW 400
+# define WIN_HH 300
+# define WIN_NAME "DOOM-NUKEM @42 BY ESUKAVA/ENIINI/ESORMUNE"
+//COLOR PALETTE
+# define C_OCHRE	0xffbc8650
+# define C_BRICK 	0xffbc5050
+# define C_LEMON	0xffbcbc50
+# define C_LIME		0xff86bc50
+# define C_GRASS	0xff50bc50
+# define C_MINT		0xff50bc86
+# define C_ICE		0xff50bcb7
+# define C_SKY		0xff508bbc
+# define C_AZURE	0xff5055bc
+# define C_GRAPE	0xff8150bc
+# define C_CHERRY	0xffbc5080
+# define C_PLUM		0xffFF5733
+# define C_BLUE		0XFF0000FF
+# define C_GREEN	0XFF00FF00
+# define C_RED		0XFFFF0000
+# define C_TEAL		0XFF00FBFF
+# define C_GREY		0XFF949494
+# define C_BLACK	0xFF000000
+# define C_WHITE	0xFFFFFFFF
+# define C_GRAY		0xFF808080
+# define C_PINK		0xFFE297DF
+# define C_PURPLE	0xFF6E26B4
+# define C_ORANGE	0xFFE7973D
+# define C_DEBUG	0xFF26FF26
+
 /*
 *	Defines a bunch of generic/specialized datatypes for use within multiple
 *	areas of the program.
 */
-
-//Predefined angles for player-independent object orientation
-# define ANGLE_E	0
-# define ANGLE_NE	45
-# define ANGLE_N	90
-# define ANGLE_NW	135
-# define ANGLE_W	180
-# define ANGLE_SW	225
-# define ANGLE_S	270
-# define ANGLE_SE	315
-
-//as our font atlases only include printable characters, we need to offset
-//actual char value accordingly for indexes to match.
-# define PRINTABLE_CHAR_OFFSET 0x20
-# define PRINTABLE_CHAR_COUNT 95
 
 typedef struct s_vector {
 	float	x;

@@ -7,19 +7,13 @@ LFLAGS	=	-Wall -Wextra -g #-Werror -O3
 #sources & object files
 SRC_DIR =	./src/
 OBJ_DIR =	./build/
-SRC_LIST =	array_value_manip.c \
-		blit.c \
-		color.c \
-		debug.c \
-		draw_pixel.c \
+SRC_LIST = color.c \
 		draw_line.c \
+		draw_pixel.c \
 		draw_shapes.c \
 		draw_vector_line.c \
 		fps_counter.c \
-		font_atlas.c \
-		init_mapdata.c \
 		keyevents.c \
-		load_tga.c \
 		m_math.c \
 		main.c \
 		mm_projection.c \
@@ -30,18 +24,8 @@ SRC_LIST =	array_value_manip.c \
 		mv_operations.c \
 		mv_vectoral.c \
 		r_cube.c \
-		r_init.c \
-		r_map.c \
-		r_minimap.c \
-		r_movement.c \
-		r_projection.c \
-		r_rotation.c \
 		r_testing.c \
 		r_utility.c \
-		resourcefile.c \
-		rf_io.c \
-		rf_lump.c \
-		spritesheet.c \
 		testing.c
 SRCS = $(addprefix $(SRC_DIR),$(SRC_LIST))
 OBJS = $(addprefix $(OBJ_DIR),$(SRC_LIST:.c=.o))

@@ -9,9 +9,7 @@ static void	init_player(t_doom *doom)
 	doom->keys.right_pressed = FALSE;
 	doom->keys.fps_switch = FALSE;
 	doom->keys.mouse_switch = FALSE;
-	doom->keys.view_switch = FALSE;
 	doom->keys.rot_switch = TRUE;
-	bzero(&doom->tests, sizeof(t_tests));
 }
 
 /*
@@ -41,7 +39,6 @@ static void	init(t_doom *doom)
 		ft_getout(SDL_GetError());
 	doom->rend.run = TRUE;
 	init_player(doom);
-	init_ui(&doom->ui);
 }
 
 static void	cleanup(t_doom *doom)
@@ -73,8 +70,6 @@ static void	loop(t_doom	*doom)
 	if (SDL_LockTexture(doom->rend.win_tex, NULL, \
 		&doom->rend.win_pixels, &doom->rend.win_pixel_pitch) < 0)
 		ft_getout(SDL_GetError());
-	if (doom->ui.active)
-		blit_debug_ui(doom);
 	ft_memcpy(doom->rend.win_pixels, doom->rend.win_buffer->px, \
 	WIN_H * doom->rend.win_pixel_pitch);
 	SDL_UnlockTexture(doom->rend.win_tex);
@@ -89,7 +84,6 @@ int	main(void)
 {
 	t_doom		doom;
 
-	doom.rf = (t_rf){0, 18, NULL, 0};
 	ft_bzero(&doom.rend, sizeof(t_rend));
 	doom.rend.win_buffer = (t_buffer *)malloc(sizeof(t_buffer));
 	if (!doom.rend.win_buffer)
