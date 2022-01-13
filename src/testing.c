@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 21:24:59 by eniini            #+#    #+#             */
+/*   Updated: 2022/01/13 21:26:13 by eniini           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 void	init_tests(t_doom *doom)
 {
 	doom->world.tricount = 12;
-	//doom->world.tricount = 1; //TESTING
 	doom->world.cube_rotation = (t_vector){1, 1, 1, 1};
 	doom->world.camera = (t_vector){0, 0, 0, 1};
 	doom->world.cam_fov = 90;

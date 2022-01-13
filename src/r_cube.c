@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   r_cube.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 21:24:04 by eniini            #+#    #+#             */
+/*   Updated: 2022/01/13 21:24:05 by eniini           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 static void	drawtriangle(t_buffer *buf, t_fpoint p1, t_fpoint p2, t_fpoint p3)
@@ -51,11 +63,11 @@ void	draw_cube (t_doom *doom)
 		normal.y /= normal_len;
 		normal.z /= normal_len;
 
-		float dotproduct;
-		dotproduct = mv_dot_product(normal, tri_transformed.p[0]);
-		if (dotproduct < 0) //negative dot-product is a more accurate way of solving the above.
-		//if (dotproduct) //TESTING ONLY
-		{	//if our camera would move, dot_product's second argument should be (tri_trans.p[0] - cameravector)
+		t_vector	camera_ray;
+		camera_ray = mv_substract(tri_transformed.p[0], doom->world.camera); //expand this if camera becomes mobile
+		
+		if (mv_dot_product(normal, camera_ray) < 0.0f) //check if plane's normal alings with the camera_ray
+		{
 			//project to 2D view
 			tri_projected.p[0] = mm_multiply_vector(tri_transformed.p[0], doom->world.m_proj);
 			tri_projected.p[1] = mm_multiply_vector(tri_transformed.p[1], doom->world.m_proj);

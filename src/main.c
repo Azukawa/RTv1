@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/13 21:22:33 by eniini            #+#    #+#             */
+/*   Updated: 2022/01/13 21:25:54 by eniini           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
 
 static void	init_player(t_doom *doom)
 {
-
 	doom->keys.up_pressed = FALSE;
 	doom->keys.down_pressed = FALSE;
 	doom->keys.left_pressed = FALSE;
