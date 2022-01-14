@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/13 21:28:19 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 14:58:09 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 
 //generated content
 typedef struct s_world {
-	t_tri		*cube;
+	//t_tri		*cube;
+	t_quad		*cube;
 	t_mat4		m_proj;
 	t_vector	camera;
 	int			tricount;
@@ -92,4 +93,6 @@ void		keyevent(t_doom *doom, SDL_Event *e);
 void		fps_counter(int *global_fps);
 void		mouse_movement(t_doom *doom);
 
+t_quad		*init_cube(void);
+void		set_cube(t_quad *c, t_fvec3 d, t_fvec3 p);
 #endif

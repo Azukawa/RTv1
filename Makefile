@@ -23,6 +23,7 @@ SRC_LIST = color.c \
 		mouse.c \
 		mv_operations.c \
 		mv_vectoral.c \
+		primitives.c \
 		r_cube.c \
 		r_testing.c \
 		r_utility.c \

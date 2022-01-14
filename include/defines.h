@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:13 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/13 21:29:38 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 14:59:35 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ typedef t_fvector	t_fvec3;
 typedef struct s_tri {
 	t_vector	p[3];
 }				t_tri;
+
+typedef struct s_quad {
+	t_vector	p[4];
+}				t_quad;
 
 //4 x 4 matrix
 typedef struct s_mat4 {
