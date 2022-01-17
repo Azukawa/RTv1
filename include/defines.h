@@ -6,12 +6,15 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:13 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 14:59:35 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 18:39:06 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
+
+# define TRICOUNT_SPHERE	20
+# define QUADCOUNT_CUBE		6
 
 # include <stdint.h>
 
@@ -20,7 +23,7 @@
 # define WIN_H	600
 # define WIN_HW	400
 # define WIN_HH	300
-# define WIN_NAME	"DOOM-NUKEM @42 BY ESUKAVA/ENIINI/ESORMUNE"
+# define WIN_NAME	"RTv1 build version 0.0"
 //COLOR PALETTE
 # define C_OCHRE	0xffbc8650
 # define C_BRICK	0xffbc5050

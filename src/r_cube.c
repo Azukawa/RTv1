@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:24:04 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 16:11:11 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 21:23:15 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	draw_cube (t_doom *doom)
 	mat_world = mm_multiply_matrix(mat_world, mat_translation);
 	viewoffset = (t_vector){1.0f, 1.0f, 0, 1};
 	i = 0;
-	while (i < 6)
+	while (i < QUADCOUNT_CUBE)
 	{
 		quad_transformed.p[0] = mm_multiply_vector(doom->world.cube[i].p[0], mat_world);
 		quad_transformed.p[1] = mm_multiply_vector(doom->world.cube[i].p[1], mat_world);
@@ -116,6 +116,80 @@ void	draw_cube (t_doom *doom)
 			quad_projected.p[3].x *= 0.5f * (float)WIN_W;
 			quad_projected.p[3].y *= 0.5f * (float)WIN_H;
 			draw_quad(doom->rend.win_buffer, quad_projected, i);
+		}
+		i++;
+	}
+}
+
+static void	drawtriangle(t_buffer *buf, t_fpoint p1, t_fpoint p2, t_fpoint p3)
+{
+	draw_vector_line(buf, (t_line){(t_ivec3){p1.x, p1.y, 0}, (t_ivec3){p2.x, p2.y, 0}, 0}, C_DEBUG);
+	draw_vector_line(buf, (t_line){(t_ivec3){p2.x, p2.y, 0}, (t_ivec3){p3.x, p3.y, 0}, 0}, C_DEBUG);
+	draw_vector_line(buf, (t_line){(t_ivec3){p3.x, p3.y, 0}, (t_ivec3){p1.x, p1.y, 0}, 0}, C_DEBUG);
+}
+
+void	draw_sphere (t_doom *doom)
+{
+	t_tri		tri_projected;
+	t_tri		tri_transformed;
+	t_mat4		mat_translation;
+	t_mat4		mat_world;
+	int			i;
+	t_vector	viewoffset;
+
+	t_mat4	mrot_z;
+	t_mat4	mrot_x;
+	mrot_x = mm_init_rotationmatrix_x(doom->world.cube_rotation.x * 0.5);
+	mrot_z = mm_init_rotationmatrix_z(doom->world.cube_rotation.z * 0.25);
+	mat_translation = mm_init_translation(0.0f, 0.0f, doom->world.cam_distance);
+	mat_world = mm_init_unitmatrix();
+	mat_world = mm_multiply_matrix(mrot_z, mrot_x);
+	mat_world = mm_multiply_matrix(mat_world, mat_translation);
+	viewoffset = (t_vector){1.0f, 1.0f, 0, 1};
+	i = 0;
+	while (i < TRICOUNT_SPHERE)
+	{
+		tri_transformed.p[0] = mm_multiply_vector(doom->world.sphere[i].p[0], mat_world);
+		tri_transformed.p[1] = mm_multiply_vector(doom->world.sphere[i].p[1], mat_world);
+		tri_transformed.p[2] = mm_multiply_vector(doom->world.sphere[i].p[2], mat_world);
+		t_vector	normal;
+		t_vector	line1;
+		t_vector	line2;
+		line1 = mv_substract(tri_transformed.p[1], tri_transformed.p[0]);
+		line2 = mv_substract(tri_transformed.p[2], tri_transformed.p[0]);
+		normal = mv_normalize(mv_cross_product(line1, line2));
+		float	normal_len;
+		normal_len = sqrtf(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+		normal.x /= normal_len;
+		normal.y /= normal_len;
+		normal.z /= normal_len;
+		float dotproduct;
+		t_vector camera_ray;
+		camera_ray = mv_substract(tri_transformed.p[0], doom->world.camera);
+		dotproduct = mv_dot_product(normal, camera_ray);
+		if (dotproduct < 0.0f)
+		{
+			tri_projected.p[0] = mm_multiply_vector(tri_transformed.p[0], doom->world.m_proj);
+			tri_projected.p[1] = mm_multiply_vector(tri_transformed.p[1], doom->world.m_proj);
+			tri_projected.p[2] = mm_multiply_vector(tri_transformed.p[2], doom->world.m_proj);
+			//to scale projected coordinates into view, we need to normalize it
+			tri_projected.p[0] = mv_divide(tri_projected.p[0], tri_projected.p[0].w);  // <- this here!
+			tri_projected.p[1] = mv_divide(tri_projected.p[1], tri_projected.p[1].w);
+			tri_projected.p[2] = mv_divide(tri_projected.p[2], tri_projected.p[2].w);
+			//offset into visible screen space
+			tri_projected.p[0] = mv_add(tri_projected.p[0], viewoffset);
+			tri_projected.p[1] = mv_add(tri_projected.p[1], viewoffset);
+			tri_projected.p[2] = mv_add(tri_projected.p[2], viewoffset);
+			tri_projected.p[0].x *= 0.5f * (float)WIN_W;
+			tri_projected.p[0].y *= 0.5f * (float)WIN_H;
+			tri_projected.p[1].x *= 0.5f * (float)WIN_W;
+			tri_projected.p[1].y *= 0.5f * (float)WIN_H;
+			tri_projected.p[2].x *= 0.5f * (float)WIN_W;
+			tri_projected.p[2].y *= 0.5f * (float)WIN_H;
+			drawtriangle(doom->rend.win_buffer, \
+			(t_fpoint){tri_projected.p[0].x, tri_projected.p[0].y, 0},
+			(t_fpoint){tri_projected.p[1].x, tri_projected.p[1].y, 0},
+			(t_fpoint){tri_projected.p[2].x, tri_projected.p[2].y, 0});
 		}
 		i++;
 	}

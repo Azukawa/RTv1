@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:23:06 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/13 21:23:06 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 20:49:20 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ t_vector	mv_normalize(t_vector v)
 	ret.x = v.x / l;
 	ret.y = v.y / l;
 	ret.z = v.z / l;
+	ret.w = v.w / l;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:24:59 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 16:12:24 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 21:06:42 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	init_tests(t_doom *doom)
 	doom->world.cube = init_cube();
 	if (doom->world.cube)
 		set_cube(doom->world.cube, (t_fvec3){1,1,1}, (t_fvec3){0, 0, 0});
+
+	doom->world.sphere = init_sphere();
+	if (doom->world.sphere)
+		set_sphere(doom->world.sphere, 10.f);
+
 	doom->world.m_proj = mm_init_3d_projection(doom->world.cam_fov, \
 	(float)WIN_H / (float)WIN_W, 0.1f, 1000.f);
 }

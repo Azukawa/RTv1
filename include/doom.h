@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 14:58:09 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/14 18:44:02 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 //generated content
 typedef struct s_world {
 	//t_tri		*cube;
+	t_tri		*sphere;
 	t_quad		*cube;
 	t_mat4		m_proj;
 	t_vector	camera;
@@ -84,6 +85,7 @@ void		draw_vector_line(t_buffer *buf, t_line line, uint32_t c);
 
 void		r_dotests(t_doom *doom);
 void		draw_cube(t_doom *doom);
+void		draw_sphere (t_doom *doom);
 
 void		init_tests(t_doom *doom);
 void		dotests(t_doom *doom);
@@ -95,4 +97,7 @@ void		mouse_movement(t_doom *doom);
 
 t_quad		*init_cube(void);
 void		set_cube(t_quad *c, t_fvec3 d, t_fvec3 p);
+t_tri		*init_sphere(void);
+void		set_sphere(t_tri *sphere, float radius);
+
 #endif
