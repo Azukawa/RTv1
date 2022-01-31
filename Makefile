@@ -8,25 +8,17 @@ LFLAGS	=	-Wall -Wextra -g #-Werror -O3
 SRC_DIR =	./src/
 OBJ_DIR =	./build/
 SRC_LIST = color.c \
-		draw_line.c \
 		draw_pixel.c \
-		draw_shapes.c \
-		draw_vector_line.c \
-		fps_counter.c \
-		keyevents.c \
 		m_math.c \
 		main.c \
 		mm_projection.c \
 		mm_rotation.c \
 		mm_transformations.c \
 		mm_utils.c \
-		mouse.c \
-		mv_operations.c \
+		mv_vector_ops.c \
+		mv_float_ops.c \
 		mv_vectoral.c \
-		primitives.c \
-		r_cube.c \
-		r_testing.c \
-		r_utility.c \
+		raytracer.c \
 		testing.c
 SRCS = $(addprefix $(SRC_DIR),$(SRC_LIST))
 OBJS = $(addprefix $(OBJ_DIR),$(SRC_LIST:.c=.o))

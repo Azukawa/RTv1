@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:24 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/13 21:28:25 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/25 16:16:47 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 
 # include "defines.h"
 
-//vector funcs
+//vector operations
 
-t_vector	mv_add(t_vector va, t_vector vb);
-t_vector	mv_substract(t_vector va, t_vector vb);
-t_vector	mv_multiply(t_vector va, float multiplier);
-t_vector	mv_divide(t_vector va, float divisor);
+t_vector	mv_add_f(t_vector v, float f);
+t_vector	mv_sub_f(t_vector v, float f);
+t_vector	mv_mul_f(t_vector v, float f);
+t_vector	mv_div_f(t_vector v, float f);
+
+t_vector	mv_add_v(t_vector va, t_vector vb);
+t_vector	mv_sub_v(t_vector va, t_vector vb);
+t_vector	mv_mul_v(t_vector va, t_vector vb);
+t_vector	mv_div_v(t_vector va, t_vector vb);
 
 float		mv_length(t_vector v);
 float		mv_distance_to_vector(t_vector va, t_vector vb);

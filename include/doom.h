@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 18:44:02 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/31 22:20:12 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,45 @@
 # include "defines.h"
 # include "m_utils.h"
 
+# define SPHERE		1
+# define CYLINDER	2
+# define CONE		3
+# define PLANE		4
+# define LIGHT		5
+
+/*
+*	shapes:
+*		1 - sphere
+*		2 - cylinder
+*		3 - cone
+*		4 - plane
+*		5 - light (?)
+*/
+//generic datatype for 3d primitives
+typedef struct s_obj {
+	int			shape;
+	t_vector	pos;
+	t_vector	dir;
+	float		r;
+}				t_obj;
+
+typedef struct s_cam {
+	float		view_h;
+	float		view_w;
+	float		focal_l;
+	t_vector	orig;
+	t_vector	h;
+	t_vector	v;
+	t_vector	llc;
+}				t_cam;
+
+typedef struct s_ray {
+	t_vector	orig;
+	t_vector	dir;
+}				t_ray;
+
 //generated content
 typedef struct s_world {
-	//t_tri		*cube;
-	t_tri		*sphere;
-	t_quad		*cube;
 	t_mat4		m_proj;
 	t_vector	camera;
 	int			tricount;
@@ -48,56 +82,29 @@ typedef struct s_rend
 	SDL_Texture		*win_tex;
 	void			*win_pixels;
 	t_buffer		*win_buffer;
+	t_buffer		*rt_buffer;
 	int				win_pixel_pitch;
 	t_bool			run;
 }					t_rend;
 
-//Keyevent handling.
-typedef struct s_keys {
-	t_bool		up_pressed;
-	t_bool		down_pressed;
-	t_bool		left_pressed;
-	t_bool		right_pressed;
-	t_bool		fps_switch;
-	t_bool		mouse_switch;
-	t_bool		rot_switch;
-}				t_keys;
 //superstruct that holds all the subsystem structs.
 typedef struct s_doom {
 	t_rend		rend;
 	t_world		world;
-	t_vector	mouse;
-	t_keys		keys;
-	int			global_fps;
-	double		delta;
-	int			cur_sec;
+	t_cam		cam;
+	t_obj		*object;
+	uint		objcount;
 }				t_doom;
 
 uint32_t	color_lerp(uint32_t c1, uint32_t c2, double p);
 
 void		draw_pixel(uint32_t x, uint32_t y, t_buffer *buf, uint32_t color);
-void		draw_line(t_buffer *buf, t_pixel p0, t_pixel p1, uint32_t color);
-
-void		draw_circle(t_buffer *buf, t_pixel p, int r, uint32_t color);
-void		draw_filled_circle(t_buffer *buf, t_pixel p, int r, uint32_t col);
-void		draw_square(t_pixel start, t_pixel end, t_buffer *buf, uint32_t c);
-void		draw_vector_line(t_buffer *buf, t_line line, uint32_t c);
-
-void		r_dotests(t_doom *doom);
-void		draw_cube(t_doom *doom);
-void		draw_sphere (t_doom *doom);
 
 void		init_tests(t_doom *doom);
 void		dotests(t_doom *doom);
 void		cleanup_tests(t_doom *doom);
 
-void		keyevent(t_doom *doom, SDL_Event *e);
-void		fps_counter(int *global_fps);
-void		mouse_movement(t_doom *doom);
-
-t_quad		*init_cube(void);
-void		set_cube(t_quad *c, t_fvec3 d, t_fvec3 p);
-t_tri		*init_sphere(void);
-void		set_sphere(t_tri *sphere, float radius);
+void		rt_render(t_doom *doom);
+void		rt_init_cam(t_cam *cam, float fov, float ar);
 
 #endif

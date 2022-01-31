@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:23:06 by eniini            #+#    #+#             */
-/*   Updated: 2022/01/14 20:49:20 by eniini           ###   ########.fr       */
+/*   Updated: 2022/01/25 16:08:44 by eniini           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,17 @@ float	mv_distance_to_vector(t_vector va, t_vector vb)
 			((va.y - vb.y) * (va.y - vb.y))));
 }
 
+/*
+*	Calculates the length or a magnitude of a vector (from origin point).
+*	The result is equal to sqrt(dot(v, v)).
+*/
 float	mv_length(t_vector v)
 {
 	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
 /*
-*	Vector is normalized i.e. turned into an unit vector, by dividing each of
+*	Vector is normalized i.e. turned into an unit vector, by scaling each of
 *	its components by its magnitude.
 */
 t_vector	mv_normalize(t_vector v)
