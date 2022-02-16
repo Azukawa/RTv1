@@ -7,19 +7,16 @@ LFLAGS	=	-Wall -Wextra -g #-Werror -O3
 #sources & object files
 SRC_DIR =	./src/
 OBJ_DIR =	./build/
-SRC_LIST = color.c \
-		draw_pixel.c \
-		m_math.c \
+SRC_LIST = draw_pixel.c \
 		main.c \
-		mm_projection.c \
-		mm_rotation.c \
-		mm_transformations.c \
-		mm_utils.c \
-		mv_vector_ops.c \
-		mv_float_ops.c \
-		mv_vectoral.c \
-		raytracer.c \
-		testing.c
+		ales_rayc.c \
+		keyevents.c \
+		v_util_1.c \
+		v_util_2.c \
+		uni_util.c \
+		min_max.c \
+		ray_intersect.c \
+		ray_cast_util.c
 SRCS = $(addprefix $(SRC_DIR),$(SRC_LIST))
 OBJS = $(addprefix $(OBJ_DIR),$(SRC_LIST:.c=.o))
 
