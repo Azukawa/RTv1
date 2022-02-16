@@ -6,34 +6,34 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:22:33 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/16 11:57:06 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/16 19:09:52 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-
 static void	init_player(t_doom *doom)
 {
-	doom->keys.up_pressed = FALSE;
-	doom->keys.down_pressed = FALSE;
-	doom->keys.left_pressed = FALSE;
-	doom->keys.right_pressed = FALSE;
-	doom->keys.fps_switch = FALSE;
-	doom->keys.mouse_switch = FALSE;
-	doom->keys.rot_switch = TRUE;
-
+	doom->sx = 0;
+	doom->sy = 0;
 	doom->xvar = 0;
 	doom->yvar = 0;
 	doom->zvar = 0;
-
+	doom->cam.pos.x = 0;
+	doom->cam.pos.y = 0;
+	doom->cam.pos.z = 0;
+	doom->cam.rot.x = 0;
+	doom->cam.rot.y = 0;
+	doom->cam.rot.z = 0;
+	doom->cam.dir = v_rot_xyz(doom->cam.dir, doom->cam.rot);
 	doom->object_count = 3;
+	doom->run = TRUE;
 
 	doom->object[0].pos.z = 20;
 	doom->object[0].pos.x = 0;
 	doom->object[0].pos.y = 0;
-	doom->object[0].dir.x = 0;
-	doom->object[0].dir.y = 1;
+	doom->object[0].dir.x = 1;
+	doom->object[0].dir.y = 0;
 	doom->object[0].dir.z = 0;
 	doom->object[0].r = 3;
 	doom->object[0].material = 2;
@@ -44,7 +44,7 @@ static void	init_player(t_doom *doom)
 	doom->object[1].pos.x = 7;
 	doom->object[1].pos.y = 0;
 	doom->object[1].dir.x = 0;
-	doom->object[1].dir.y = -1;
+	doom->object[1].dir.y = 1;
 	doom->object[1].dir.z = 0;
 	doom->object[1].r = 0;
 	doom->object[1].angle = 1;
@@ -134,8 +134,7 @@ static void	init_player(t_doom *doom)
 //	doom->cone[0].dir.z = 0;
 //	doom->cone[0].r = 0;
 //	doom->cone[0].angle = 1 ;
-
-
+	
 	doom->light[0].pos.x = 0;//WIN_W/2;
 	doom->light[0].pos.y = 0;//WIN_H/2;
 	doom->light[0].pos.z = 0;
@@ -144,7 +143,6 @@ static void	init_player(t_doom *doom)
 	doom->light[0].intensity.blue = 0.1;
 
 }
-
 
 /*
 *	Todo:	read up on windowflags in case we could have additional features
@@ -180,9 +178,22 @@ static void	cleanup(t_doom *doom)
 	SDL_DestroyTexture(doom->rend.win_tex);
 	SDL_DestroyRenderer(doom->rend.renderer);
 	SDL_DestroyWindow(doom->rend.win);
-	free(doom->rend.win_buffer->px);
-	free(doom->rend.win_buffer);
+	free(doom->rend.win_buffer.px);
 	SDL_Quit();
+}
+
+void		draw_to_window(t_doom *doom)
+{
+		if (SDL_LockTexture(doom->rend.win_tex, NULL, \
+			&doom->rend.win_pixels, &doom->rend.win_pixel_pitch) < 0)
+			ft_getout(SDL_GetError());
+		ft_memcpy(doom->rend.win_pixels, doom->rend.win_buffer.px, \
+		WIN_H * doom->rend.win_pixel_pitch);
+		SDL_UnlockTexture(doom->rend.win_tex);
+		if (SDL_RenderCopy(doom->rend.renderer, doom->rend.win_tex, NULL, NULL) < 0)
+			ft_getout(SDL_GetError());
+		SDL_RenderPresent(doom->rend.renderer);
+	
 }
 
 /*
@@ -195,21 +206,19 @@ static void	loop(t_doom	*doom)
 {
 	SDL_Event	e;
 
-	ft_bzero(doom->rend.win_buffer->px, WIN_H * WIN_W * sizeof(uint32_t));
-	SDL_PollEvent(&e);
+//	SDL_PollEvent(&e);
+	SDL_WaitEvent(&e);
 	if (e.window.event == SDL_WINDOWEVENT_CLOSE)
 		doom->rend.run = FALSE;
+
+	
 	keyevent(doom, &e);
-	ales_rayc(doom);
-	if (SDL_LockTexture(doom->rend.win_tex, NULL, \
-		&doom->rend.win_pixels, &doom->rend.win_pixel_pitch) < 0)
-		ft_getout(SDL_GetError());
-	ft_memcpy(doom->rend.win_pixels, doom->rend.win_buffer->px, \
-	WIN_H * doom->rend.win_pixel_pitch);
-	SDL_UnlockTexture(doom->rend.win_tex);
-	if (SDL_RenderCopy(doom->rend.renderer, doom->rend.win_tex, NULL, NULL) < 0)
-		ft_getout(SDL_GetError());
-	SDL_RenderPresent(doom->rend.renderer);
+	if(doom->run == TRUE)	
+	{
+		ft_bzero(doom->rend.win_buffer.px, WIN_H * WIN_W * sizeof(uint32_t));
+		ales_rayc(doom);
+		draw_to_window(doom);
+	}
 }
 
 int	main(void)
@@ -217,40 +226,21 @@ int	main(void)
 	t_doom		doom;
 
 	ft_bzero(&doom.rend, sizeof(t_rend));
-	doom.rend.win_buffer = (t_buffer *)malloc(sizeof(t_buffer));
-	if (!doom.rend.win_buffer)
-		ft_getout("failed to initialize main buffer");
-	doom.rend.win_buffer->w = WIN_W;
-	doom.rend.win_buffer->h = WIN_H;
-	doom.rend.win_buffer->px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W);
+//	doom.rend.win_buffer = (t_buffer *)malloc(sizeof(t_buffer));
+//	if (!doom.rend.win_buffer)
+//		ft_getout("failed to initialize main buffer");
+	doom.rend.win_buffer.w = WIN_W;
+	doom.rend.win_buffer.h = WIN_H;
+	if(!(doom.rend.win_buffer.px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W)))
+	{
+		write(1, "fail to malloc\n", 20);
+		doom.rend.win_buffer.px = NULL;
+		cleanup(&doom);
+		return(-1);
+	}
 	init(&doom);
 	while (doom.rend.run)
 		loop(&doom);
 	cleanup(&doom);
 	return (0);
 }
-
-//int	main(void)
-//{
-//	t_doom		doom;
-//
-//	ft_bzero(&doom.rend, sizeof(t_rend));
-//	doom.rend.win_buffer = (t_buffer *)malloc(sizeof(t_buffer));
-//	doom.rend.rt_buffer = (t_buffer *)malloc(sizeof(t_buffer));
-//	if (!doom.rend.win_buffer || !doom.rend.rt_buffer)
-//		ft_getout("failed to initialize pixel buffers");
-//	doom.rend.win_buffer->w = WIN_W;
-//	doom.rend.win_buffer->h = WIN_H;
-//	doom.rend.win_buffer->px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W);
-//	doom.rend.rt_buffer->w = WIN_W;
-//	doom.rend.rt_buffer->h = WIN_H;
-//	doom.rend.rt_buffer->px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W);
-//	if (!doom.rend.win_buffer->px || !doom.rend.rt_buffer->px)
-//		ft_getout("failed to initialize pixel buffers");
-//	init(&doom);
-//	init_tests(&doom);
-//	while (doom.rend.run)
-//		loop(&doom);
-//	cleanup(&doom);
-//	return (0);
-//}

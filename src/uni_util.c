@@ -6,7 +6,7 @@
 /*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 12:25:09 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 12:30:04 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/16 13:03:29 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	quadratic_equation(t_fvector abc, float *t0, float *t1)
 	*t0 = (-abc.y - sqrtf(discriminant)) / denominator;
 	*t1 = (-abc.y + sqrtf(discriminant)) / denominator;
 }
-

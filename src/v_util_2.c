@@ -6,7 +6,7 @@
 /*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 12:18:29 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 12:26:18 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/16 13:02:46 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,3 @@ t_fvector	v_mult(t_fvector vector, float c)
 	vector.z = vector.z * c;
 	return (vector);
 }
-
-

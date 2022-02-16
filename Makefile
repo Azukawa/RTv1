@@ -2,7 +2,7 @@ NAME	=	RTv1
 
 #compiler
 CC	=	gcc
-LFLAGS	=	-Wall -Wextra -g #-Werror -O3
+LFLAGS	=	-Wall -Wextra -g -o3 #-Werror -O3
 
 #sources & object files
 SRC_DIR =	./src/
@@ -16,7 +16,8 @@ SRC_LIST = draw_pixel.c \
 		uni_util.c \
 		min_max.c \
 		ray_intersect.c \
-		ray_cast_util.c
+		ray_cast_util.c \
+		vector_rotation.c
 SRCS = $(addprefix $(SRC_DIR),$(SRC_LIST))
 OBJS = $(addprefix $(OBJ_DIR),$(SRC_LIST:.c=.o))
 

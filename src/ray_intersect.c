@@ -6,7 +6,7 @@
 /*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 12:35:31 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 12:38:58 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/16 16:51:59 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	ray_plane_intersect(t_ray *r, t_object *p, float *t)
 	ret = plane_intersect_point(r->dir, r->start, p->dir, p->pos);
 	if (ret.z <= 0)
 		return (FALSE);
-	if (two_point_dist(ret, p->pos) > 60 || ret.z >= *t)
+	if (/*two_point_dist(ret, p->pos) > 60 ||*/ ret.z >= *t)
 		return (FALSE);
 	*t = v_len(v_sub(ret, r->start));
 	if (*t <= 0)
@@ -110,20 +110,18 @@ t_bool	ray_cone_intersect(t_ray *r, t_object *obj, float *result)
 	abc.x = v_dot(r->dir, r->dir) - c_fctr
 		* v_dot(r->dir, obj->dir) * v_dot(r->dir, obj->dir);
 	abc.y = 2 * (v_dot(r2o, r->dir) - c_fctr * v_dot(r->dir, obj->dir)
-		* v_dot(r2o, obj->dir));
+			* v_dot(r2o, obj->dir));
 	abc.z = v_dot(r2o, r2o) - c_fctr * v_dot(r2o, obj->dir)
 		* v_dot(r2o, obj->dir) - obj->r * obj->r;
 	quadratic_equation(abc, &t0, &t1);
-	t0 = ft_fmin(t0, t1);	
-	if ((t0 > 0.01) && (t0 < *result))
+	t0 = ft_fmin(t0, t1);
+	if ((t0 > 0) && (t0 < *result))
 	{
-		t_fvector point = v_add(r->start, v_mult(r->dir, t0));
-		if ((v_dot(v_sub(point, obj->pos), obj->dir) > 0))
+		abc = v_add(r->start, v_mult(r->dir, t0));
+		if ((v_dot(v_sub(abc, obj->pos), obj->dir) > 0))
 			return (FALSE);
 		*result = t0;
 		return (TRUE);
 	}
-    return (FALSE);
+	return (FALSE);
 }
-
-

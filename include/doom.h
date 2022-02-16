@@ -6,7 +6,7 @@
 /*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/16 12:50:33 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/16 19:06:03 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef	struct	s_color{
 	float green;
 	float blue;
 }				t_color;
-
 
 typedef struct	s_object{
 	t_fvector	pos;
@@ -96,6 +95,12 @@ typedef struct s_light{
 
 }				t_light;
 
+typedef struct	s_cam{
+	t_fvector	pos;
+	t_fvector	dir;
+	t_fvector	rot;
+}				t_cam;
+
 //Holds everything related directly to SDL's drawbuffer.
 typedef struct s_rend
 {
@@ -103,7 +108,7 @@ typedef struct s_rend
 	SDL_Window		*win;
 	SDL_Texture		*win_tex;
 	void			*win_pixels;
-	t_buffer		*win_buffer;
+	t_buffer		win_buffer;
 	int				win_pixel_pitch;
 	t_bool			run;
 }					t_rend;
@@ -118,6 +123,7 @@ typedef struct s_keys {
 	t_bool		mouse_switch;
 	t_bool		rot_switch;
 }				t_keys;
+
 //superstruct that holds all the subsystem structs.
 typedef struct s_doom {
 	t_rend		rend;
@@ -134,6 +140,10 @@ typedef struct s_doom {
 	int			yvar;
 	int			zvar;
 	int			object_count;
+	int			sx;
+	int			sy;
+	t_cam		cam;
+	t_bool		run;
 }				t_doom;
 
 uint32_t	color_lerp(uint32_t c1, uint32_t c2, double p);
@@ -160,11 +170,14 @@ t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);
 t_bool		ray_cone_intersect(t_ray *r, t_object *obj, float *result);
-
-t_fvector	ray_trough_screen(t_fvector start, int sx, int sy);
+//t_fvector	ray_trough_screen(t_fvector start, int sx, int sy);
+t_ray		ray_trough_screen(t_doom *doom);
 t_bool		ray_object_intersect(t_ray *ray, t_object *obj, float *t);
-t_bool		draw_light(t_ray *ray, t_doom *doom, float *t, int sx, int sy);
-
-
+t_bool		draw_light(t_ray *ray, t_doom *doom, float *t);
+void		v_rot_x(t_fvector *vec, float rad);
+void		v_rot_y(t_fvector *vec, float rad);
+void		v_rot_z(t_fvector *vec, float rad);
+t_fvector	v_rot_xyz(t_fvector vec, t_fvector rot);
+void		draw_to_window(t_doom *doom);
 
 #endif

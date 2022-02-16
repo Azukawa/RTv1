@@ -1,63 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ales_rayc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/16 13:46:22 by alero             #+#    #+#             */
+/*   Updated: 2022/02/16 19:18:49 by alero            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "doom.h"
+
+void	cone_normal(t_fvector new_start, t_object *object, t_fvector *n)
+{
+	*n = v_sub(new_start, object->pos);
+	*n = v_div(v_mult(*n, v_dot(object->dir, *n)), v_dot(*n, *n));
+	*n = v_sub(object->dir, *n);
+}
 
 t_fvector	find_object_normal(t_object *object, t_fvector new_start)
 {
 	t_fvector	n;
+	t_fvector	pt;
 	t_fvector	temp;
 	float		t;
+
 	n = (t_fvector){0, 0, 0};
-	
-	if(object->type == SPHERE)
+	if (object->type == SPHERE)
 		n = v_sub(new_start, object->pos);
-	else if(object->type == PLANE)
+	else if (object->type == PLANE)
 	{
 		n = object->dir;
 		n = v_mult(n, -1);
 	}
-	else if(object->type == CONE)
-	{
-		n = v_sub(new_start, object->pos);
-		n = v_div(v_mult(n, v_dot(object->dir, n)), v_dot(n, n));
-		n = v_sub(object->dir, n);
-	}
-	else// if(object->type == CYL)
+	else if (object->type == CONE)
+		cone_normal(new_start, object, &n);
+	else
 	{
 		temp = v_sub(new_start, object->pos);
 		t = v_dot(temp, v_normalize(object->dir));
-   		t_fvector	pt = v_add(object->pos, v_mult(object->dir, t));
-   		n = v_sub(new_start, pt);
+		pt = v_add(object->pos, v_mult(object->dir, t));
+		n = v_sub(new_start, pt);
 	}
-	return(v_normalize(n));	
+	return (v_normalize(n));
 }
 
-void	calculate_lighting(t_doom *doom, t_fvector n, t_fvector new_start, float t, int cur_obj, uint32_t *color)
+void	calculate_lighting(t_doom *doom, t_fvector n,
+t_fvector new_start, int cur_obj, uint32_t *color)
 {
-	float red, green, blue;
-	t_ray light_ray;
-	t_bool in_shadow;
-	t_material current_mat = doom->material[doom->object[cur_obj].material];
+	float		red;
+	float		green;
+	float		blue;
+	t_ray		light_ray;
+	t_bool		in_shadow;
+	float		t1;
+	t_fvector	dist;
+	t_material	current_mat;
+
+	current_mat = doom->material[doom->object[cur_obj].material];
 	red = green = blue = 0;	
-	t_fvector dist = v_sub(doom->object[9].pos, new_start);
-	float t1;
-	if(v_dot(n, dist) <= 0)
+	dist = v_sub(doom->object[9].pos, new_start);
+		if (v_dot(n, dist) <= 0)
 		return ;
 	t1 = sqrtf(v_dot(dist, dist));
-	if(t1 <= 0)
+	if (t1 <= 0)
 		return ;
-	light_ray.start = new_start;
+	light_ray.start = v_add(new_start, v_mult(n, 0.05));
 	light_ray.dir = v_mult(dist, (1/t1));
 	in_shadow = FALSE;
 	int	k = 0;
-	while(k < doom->object_count)
+	while (k < doom->object_count)
 	{
-		if(v_dot(n, dist) > 0 && k != cur_obj && ray_object_intersect(&light_ray, &doom->object[k], &t1))
+		if (v_dot(n, light_ray.dir) > 0 && k != cur_obj && ray_object_intersect(&light_ray, &doom->object[k], &t1))
 		{				
 			in_shadow = TRUE;
 			return ;
 		}
 		k++;
 	}
-	if(!in_shadow /*&& mfv_dot_product(n, light_ray.dir) >0*/ )
+	if (!in_shadow /*&& mfv_dot_product(n, light_ray.dir) >0*/ )
 	{
 		float lambert = v_dot(light_ray.dir, n);
 		red = red + lambert * doom->object[9].intensity.red * current_mat.diffuse.red;
@@ -68,7 +90,7 @@ void	calculate_lighting(t_doom *doom, t_fvector n, t_fvector new_start, float t,
 	return ;
 }
 
-void	raytracer(t_doom *doom, int sx, int sy)
+void	raytracer(t_doom *doom)
 {
 	t_ray		ray;
 	uint32_t	color;
@@ -78,57 +100,60 @@ void	raytracer(t_doom *doom, int sx, int sy)
 	t_fvector	n;
 
 	color = 0x00000000;
-	ray.start.x = 0;
-	ray.start.y = 0;
-	ray.start.z = 0;
-	ray.dir = ray_trough_screen(ray.start, sx, sy);
-	
+//	ray.start = doom->cam.pos;
+	ray = ray_trough_screen(doom);
 	t = 20000.0f;
 	cur_obj= -1;
 	i = 0;
-	while(i < doom->object_count)
+	while (i < doom->object_count)
 	{
 		if(ray_object_intersect(&ray, &doom->object[i], &t))
 			cur_obj = i;
 		i++;
 	}
-	if(draw_light(&ray, doom, &t, sx, sy))
+	if (draw_light(&ray, doom, &t))
 		return ;
-	if(cur_obj == -1)
+	if (cur_obj == -1)
 	{
-		draw_pixel(sx, sy, doom->rend.win_buffer, color);
+//		draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
 		return ;
 	}
 	t_fvector	new_start = v_add(ray.start, v_mult(ray.dir, t));
 	n = find_object_normal(&doom->object[cur_obj], new_start);
-	calculate_lighting(doom, n, new_start, t, cur_obj, &color);		
-	draw_pixel(sx, sy, doom->rend.win_buffer, color);
+	calculate_lighting(doom, n, new_start, cur_obj, &color);
+	draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
 }
 
 void	iter_screen(t_doom *doom)
 {
-	uint32_t sx, sy;
-	sy = sx = 0;
-	while (sy < WIN_H)
-	{	
-		while(sx < WIN_W)
+	doom->sx = 0;
+	doom->sy = 0;
+	while (doom->sy < WIN_H)
+	{
+		while (doom->sx < WIN_W)
 		{
-			raytracer(doom, sx, sy);
-			sx++;
+			raytracer(doom);
+			doom->sx++;
 		}
-	sy++;
-	sx = 0;
+	doom->sy++;
+	doom->sx = 0;
 	}
 }
 
 void ales_rayc(t_doom *doom)
 {		
-	doom->object[9].pos.x += doom->xvar;
-	doom->object[9].pos.y += doom->yvar;
-	doom->object[9].pos.z += doom->zvar;
+//	doom->object[9].pos.x += doom->xvar;
+//	doom->object[9].pos.y += doom->yvar;
+//	doom->object[9].pos.z += doom->zvar;
+
+	doom->cam.rot.x += doom->xvar;
+	doom->cam.rot.y += doom->yvar;
+	doom->cam.rot.z += doom->zvar;
 	
+
 	doom->xvar = 0;
 	doom->yvar = 0;
 	doom->zvar = 0;
 	iter_screen(doom);
+	doom->run = FALSE;
 }
