@@ -144,6 +144,148 @@ static void	init_player(t_doom *doom)
 
 }
 
+void	skip_white(int *i, char *str)
+{
+	while(str[i] == '\t' || str[i] == 'sp')
+		i++;
+}
+
+t_bool	parse_quantity(t_doom *doom, char *str)
+{
+	int i;
+
+	i = 0;
+	if(str[i] != 'q')
+		return (FALSE);
+	skip_white(&i, str);
+	if(str[i] >= 48 && str[i] <=57)
+		{
+			doom->object_count = ft_atoi(str[i]);
+			retrun (TRUE);
+		}
+	else
+		return (FALSE);
+}
+
+t_bool	parse_type(t_doom *doom, char *str, int index)
+{
+	int i;
+
+	i = 0;
+	if(str[i] != 't')
+		return (FALSE);
+	skip_white(&i, str);
+	if(str[i] != 's')
+	{
+		doom->object[index].type = SPHERE;
+		return (TRUE);
+	}
+	else if(str[i] != '^')
+	{
+		doom->object[index].type = CONE;
+		return (TRUE);
+	}
+	else if(str[i] != 'c')
+	{
+		doom->object[index].type = CYL;
+		return (TRUE);
+	}
+	else if(str[i] != 'p')
+	{
+		doom->object[index].type = PLANE;
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
+t_bool	parse_pos(t_doom *doom, char *str, int index )
+{
+	int i;
+	char temp[3];
+	
+	i = 0;
+	if(str[i] != 'p')
+		return (FALSE);
+	skip_white(&i, str);
+	
+}
+
+t_bool	parse_dir()
+{
+
+}
+
+
+t_bool	parse_r(t_doom *doom, char *str, int index)
+{
+	int i;
+
+	i = 0;
+	if(str[i] != 'r')
+		return (FALSE);
+	skip_white(&i, str);
+	if(str[i] >= 48 && str[i] <= 57)
+	{	
+		doom->object[index].r = ft_atoi(str[i]);
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+//material 0-2
+t_bool	parse_material(t_doom *doom, char *str, int index)
+{
+	int i;
+	int val;
+	i = 0;
+	val = 0;
+	
+	if(str[i] != 'r')
+		return (FALSE);
+	skip_white(&i, str);
+	val = ft_atoi(str[i]);
+	if(val >= 0 && val <= 2)
+	{	
+		doom->object[index].material = val;
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
+t_bool	parse_angle()
+{
+	
+}
+
+t_bool	readmap(char *str, t_map *s)
+{
+	int		fd;
+	int		ret;
+	int		i;
+	char	*output;
+
+	i = 0;
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	ret = get_next_line(fd, &output);
+	while (ret > 0)
+	{
+		s->map[i] = linetogrid(s->map[i], output, s->w);
+		i++;
+		free(output);
+		ret = get_next_line(fd, &output);
+	}
+	return (1);
+}
+
+void		parse(t_doom *doom)
+{
+	
+}
+
 /*
 *	Todo:	read up on windowflags in case we could have additional features
 *			Q:do we need sethint() and should it be to linear or nearest?
@@ -221,14 +363,12 @@ static void	loop(t_doom	*doom)
 	}
 }
 
-int	main(void)
+int	main1(void)
 {
 	t_doom		doom;
 
+
 	ft_bzero(&doom.rend, sizeof(t_rend));
-//	doom.rend.win_buffer = (t_buffer *)malloc(sizeof(t_buffer));
-//	if (!doom.rend.win_buffer)
-//		ft_getout("failed to initialize main buffer");
 	doom.rend.win_buffer.w = WIN_W;
 	doom.rend.win_buffer.h = WIN_H;
 	if(!(doom.rend.win_buffer.px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W)))
@@ -243,4 +383,10 @@ int	main(void)
 		loop(&doom);
 	cleanup(&doom);
 	return (0);
+}
+
+int		main(void)
+{
+	main1();
+	system("leaks -q RTv1");
 }
