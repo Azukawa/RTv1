@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:11:07 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/18 18:31:00 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/18 22:57:20 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ t_bool	parse_type(t_doom *doom, char *str, int index)
 		doom->object[index].type = SPHERE;
 		return (TRUE);
 	}
-	else if(str[i] == '^')
+	else if (str[i] == '^')
 	{
 		doom->object[index].type = CONE;
 		return (TRUE);
 	}
-	else if(str[i] == 'c')
+	else if (str[i] == 'c')
 	{
 		doom->object[index].type = CYL;
 		return (TRUE);
 	}
-	else if(str[i] == 'p')
+	else if (str[i] == 'p')
 	{
 		doom->object[index].type = PLANE;
 		return (TRUE);
@@ -106,71 +106,102 @@ t_bool		str_to_int(int *i, char *str, float *pos)
 }
 
 
-t_bool	parse_pos(t_doom *doom, char *str, int index )
+t_bool	parse_pos(t_doom *doom, char *str, int index)
 {
 	int i;
 	
 	i = 0;
-	if(str[i++] != 'p')
+	if (str[i++] != 'p')
 		return (FALSE);
 	skip_white(&i, str);
-	if(!str_to_int(&i, str, &doom->object[index].pos.x))
+	if (!str_to_int(&i, str, &doom->object[index].pos.x))
 		return(FALSE);
-	if(!str_to_int(&i, str, &doom->object[index].pos.y))
+	if (!str_to_int(&i, str, &doom->object[index].pos.y))
 		return(FALSE);
-	if(!str_to_int(&i, str, &doom->object[index].pos.z))
-		return(FALSE);
-	return(TRUE);
+	if (!str_to_int(&i, str, &doom->object[index].pos.z))
+		return (FALSE);
+	return (TRUE);
 }
 
-// t_bool	parse_dir()
-// {
-
-// 	return(FALSE);
-// }
-
-
-// t_bool	parse_r(t_doom *doom, char *str, int index)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if(str[i] != 'r')
-// 		return (FALSE);
-// 	skip_white(&i, str);
-// 	if(str[i] >= 48 && str[i] <= 57)
-// 	{	
-// 		doom->object[index].r = ft_atoi(str[i]);
-// 		return (TRUE);
-// 	}
-// 	else
-// 		return (FALSE);
-// }
-// //material 0-2
-// t_bool	parse_material(t_doom *doom, char *str, int index)
-// {
-// 	int i;
-// 	int val;
-// 	i = 0;
-// 	val = 0;
+t_bool	parse_dir(t_doom *doom, char *str, int index)
+{
+	int i;
 	
-// 	if(str[i] != 'r')
-// 		return (FALSE);
-// 	skip_white(&i, str);
-// 	val = ft_atoi(str[i]);
-// 	if(val >= 0 && val <= 2)
-// 	{	
-// 		doom->object[index].material = val;
-// 		return (TRUE);
-// 	}
-// 	else
-// 		return (FALSE);
-// }
+	i = 0;
+	if (str[i++] != 'd')
+		return (FALSE);
+	skip_white(&i, str);
+	if (!str_to_int(&i, str, &doom->object[index].dir.x))
+		return (FALSE);
+	if (!str_to_int(&i, str, &doom->object[index].dir.y))
+		return (FALSE);
+	if (!str_to_int(&i, str, &doom->object[index].dir.z))
+		return (FALSE);
+	return (TRUE);
+}
 
-// t_bool	parse_angle()
-// {
-// 	return(FALSE);
-// }
+
+t_bool	parse_r(t_doom *doom, char *str, int index)
+{
+	int i;
+	int val;
+	
+	i = 0;
+	val = 0;
+	if (str[i++] != 'r')
+		return (FALSE);
+	skip_white(&i, str);
+	if(ft_isdigit(str[i]))
+	{	
+		val = ft_atoi(&str[i]);
+		doom->object[index].r = val;
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
+//material 0-2
+t_bool	parse_material(t_doom *doom, char *str, int index)
+{
+	int i;
+	int val;
+	
+	i = 0;
+	val = 0;
+	if (str[i++] != 'm')
+		return (FALSE);
+	skip_white(&i, str);
+	if(ft_isdigit(str[i]))
+	{	
+		val = ft_atoi(&str[i]);
+		if(val >= 0 && val <= 2)
+		{	
+			doom->object[index].material = val;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
+t_bool	parse_angle(t_doom *doom, char *str, int index)
+{
+	int i;
+	int val;
+	
+	i = 0;
+	val = 0;
+	if (str[i++] != 'a')
+		return (FALSE);
+	skip_white(&i, str);
+	if(ft_isdigit(str[i]))
+	{	
+		val = ft_atoi(&str[i]);	
+		doom->object[index].angle = val;
+		return (TRUE);
+	}
+	return (FALSE);
+}
 
 t_bool saveline(char *ret, char *str)
 {
@@ -252,18 +283,27 @@ t_bool		parse(char *str, t_doom *doom)
 		return(FALSE);
 	if(!parse_quantity(doom, doom->scene[j++]))
 		return(FALSE);
+	j++;
 	while(i < doom->object_count)
 	{
-		if(!parse_type(doom, doom->scene[j++], i))
-			return(FALSE);
-		if(!parse_pos(doom, doom->scene[j++], i))
-			return(FALSE);
-
+		if (!parse_type(doom, doom->scene[j++], i))
+			return (FALSE);
+		if (!parse_pos(doom, doom->scene[j++], i))
+			return (FALSE);
+		if (!parse_dir(doom, doom->scene[j++], i))
+			return (FALSE);
+		if (!parse_r(doom, doom->scene[j++], i))
+			return (FALSE);
+		 if(!parse_material(doom, doom->scene[j++], i))
+		 	return(FALSE);
+		 if (!parse_angle(doom, doom->scene[j++], i))
+		 	return (FALSE);
+		j++;
 		i++;
 	}
 	
 	
 	print_array(doom);
 	print_stuff(doom);
-	return(TRUE);
+	return (TRUE);
 }
