@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/16 19:06:03 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/18 13:20:16 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 //c lib
 # include <string.h> //for sterror
-# include <errno.h> //for errno macro
+# include <errno.h>  //for errno macro
 # include <unistd.h> //for write TBD
+# include <fcntl.h>  //for O_RDONLY and open
 //SDL
-# include "../libSDL2/include/SDL2/SDL_mixer.h"
 # include "../libSDL2/include/SDL2/SDL.h"
 //libft
 # include "../libft/includes/libft.h"
@@ -144,6 +144,8 @@ typedef struct s_doom {
 	int			sy;
 	t_cam		cam;
 	t_bool		run;
+	char		scene[100][100];
+	int			scene_len;
 }				t_doom;
 
 uint32_t	color_lerp(uint32_t c1, uint32_t c2, double p);
@@ -170,7 +172,6 @@ t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);
 t_bool		ray_cone_intersect(t_ray *r, t_object *obj, float *result);
-//t_fvector	ray_trough_screen(t_fvector start, int sx, int sy);
 t_ray		ray_trough_screen(t_doom *doom);
 t_bool		ray_object_intersect(t_ray *ray, t_object *obj, float *t);
 t_bool		draw_light(t_ray *ray, t_doom *doom, float *t);
@@ -179,5 +180,6 @@ void		v_rot_y(t_fvector *vec, float rad);
 void		v_rot_z(t_fvector *vec, float rad);
 t_fvector	v_rot_xyz(t_fvector vec, t_fvector rot);
 void		draw_to_window(t_doom *doom);
+t_bool		parse(char *str, t_doom *doom);
 
 #endif
