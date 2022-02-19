@@ -6,44 +6,44 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:11:07 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/18 22:57:20 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/19 18:41:55 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
- void	skip_white(int *i, char *str)
- {
- 	while(str[*i] == '\t' || str[*i] == ' ')
-		 *i += 1;
- }
+void	skip_white(int *i, char *str)
+{
+	while (str[*i] == '\t' || str[*i] == ' ')
+		*i += 1;
+}
 
- t_bool	parse_quantity(t_doom *doom, char *str)
- {
- 	int i;
+t_bool	parse_quantity(t_doom *doom, char *str)
+{
+	int	i;
 
- 	i = 0;
- 	if(str[i++] != 'q')
- 		return (FALSE);
- 	skip_white(&i, str);
- 	if(str[i] >= 48 && str[i] <=57)
- 		{
- 			doom->object_count = ft_atoi(&str[i]);
- 			return (TRUE);
- 		}
- 	else
- 		return (FALSE);
- }
+	i = 0;
+	if (str[i++] != 'q')
+		return (FALSE);
+	skip_white(&i, str);
+	if (str[i] >= 48 && str[i] <= 57)
+	{
+		doom->object_count = ft_atoi(&str[i]);
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
 
 t_bool	parse_type(t_doom *doom, char *str, int index)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(str[i++] != 't')
+	if (str[i++] != 't')
 		return (FALSE);
 	skip_white(&i, str);
-	if(str[i] == 's')
+	if (str[i] == 's')
 	{
 		doom->object[index].type = SPHERE;
 		return (TRUE);
@@ -67,7 +67,7 @@ t_bool	parse_type(t_doom *doom, char *str, int index)
 		return (FALSE);
 }
 
-t_bool		val_sym(char c, int i)
+t_bool	val_sym(char c, int i)
 {
 	if (i == 0)
 	{
@@ -77,21 +77,20 @@ t_bool		val_sym(char c, int i)
 			return (FALSE);
 	}
 	else
-		if(ft_isdigit(c))
+		if (ft_isdigit(c))
 			return (TRUE);
 	return (FALSE);
-	
 }
 
-t_bool		str_to_int(int *i, char *str, float *pos)
+t_bool	str_to_int(int *i, char *str, float *pos)
 {
-	char ret[3];
-	int  j;
-	
+	char	ret[3];
+	int		j;
+
 	ft_bzero(ret, 3);
 	j = 0;
-	while(str[*i] != ',' && str[*i] != ';' && j < 3)
-	{	
+	while (str[*i] != ',' && str[*i] != ';' && j < 3)
+	{
 		if (!val_sym(str[*i], j))
 			return (FALSE);
 		ret[j] = str[*i];
@@ -105,19 +104,18 @@ t_bool		str_to_int(int *i, char *str, float *pos)
 	return (FALSE);
 }
 
-
 t_bool	parse_pos(t_doom *doom, char *str, int index)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (str[i++] != 'p')
 		return (FALSE);
 	skip_white(&i, str);
 	if (!str_to_int(&i, str, &doom->object[index].pos.x))
-		return(FALSE);
+		return (FALSE);
 	if (!str_to_int(&i, str, &doom->object[index].pos.y))
-		return(FALSE);
+		return (FALSE);
 	if (!str_to_int(&i, str, &doom->object[index].pos.z))
 		return (FALSE);
 	return (TRUE);
@@ -125,8 +123,8 @@ t_bool	parse_pos(t_doom *doom, char *str, int index)
 
 t_bool	parse_dir(t_doom *doom, char *str, int index)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (str[i++] != 'd')
 		return (FALSE);
@@ -140,21 +138,22 @@ t_bool	parse_dir(t_doom *doom, char *str, int index)
 	return (TRUE);
 }
 
-
 t_bool	parse_r(t_doom *doom, char *str, int index)
 {
-	int i;
-	int val;
-	
+	int	i;
+	int	val;
+
 	i = 0;
 	val = 0;
 	if (str[i++] != 'r')
 		return (FALSE);
 	skip_white(&i, str);
-	if(ft_isdigit(str[i]))
-	{	
+	if (ft_isdigit(str[i]))
+	{
 		val = ft_atoi(&str[i]);
 		doom->object[index].r = val;
+		if (doom->object[index].type == CONE)
+			doom->object[index].r = 0;
 		return (TRUE);
 	}
 	else
@@ -164,19 +163,19 @@ t_bool	parse_r(t_doom *doom, char *str, int index)
 //material 0-2
 t_bool	parse_material(t_doom *doom, char *str, int index)
 {
-	int i;
-	int val;
-	
+	int	i;
+	int	val;
+
 	i = 0;
 	val = 0;
 	if (str[i++] != 'm')
 		return (FALSE);
 	skip_white(&i, str);
-	if(ft_isdigit(str[i]))
-	{	
+	if (ft_isdigit(str[i]))
+	{
 		val = ft_atoi(&str[i]);
-		if(val >= 0 && val <= 2)
-		{	
+		if (val >= 0 && val <= 2)
+		{
 			doom->object[index].material = val;
 			return (TRUE);
 		}
@@ -186,40 +185,57 @@ t_bool	parse_material(t_doom *doom, char *str, int index)
 
 t_bool	parse_angle(t_doom *doom, char *str, int index)
 {
-	int i;
-	int val;
-	
+	int	i;
+	int	val;
+
 	i = 0;
 	val = 0;
 	if (str[i++] != 'a')
 		return (FALSE);
 	skip_white(&i, str);
-	if(ft_isdigit(str[i]))
-	{	
-		val = ft_atoi(&str[i]);	
+	if (ft_isdigit(str[i]))
+	{
+		val = ft_clamp_i(ft_atoi(&str[i]), 5, 45);
 		doom->object[index].angle = val;
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-t_bool saveline(char *ret, char *str)
+t_bool	saveline(char *ret, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(ft_strlen(str) < 100)
-	{	
+	if (ft_strlen(str) < 100)
+	{
 		while (i < 99 && str[i] != '\0' && str[i] != '\n')
 		{
 			ret[i] = str[i];
 			i++;
 		}
 		ret[i] = '\0';
-		return(TRUE);
+		return (TRUE);
 	}
 	else
-		return(FALSE);
+		return (FALSE);
+}
+
+t_bool	parse_light(t_doom *doom, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i++] != 'l')
+		return (FALSE);
+	skip_white(&i, str);
+	if (!str_to_int(&i, str, &doom->object[9].pos.x))
+		return (FALSE);
+	if (!str_to_int(&i, str, &doom->object[9].pos.y))
+		return (FALSE);
+	if (!str_to_int(&i, str, &doom->object[9].pos.z))
+		return (FALSE);
+	return (TRUE);
 }
 
 t_bool	readscene(char *str, t_doom *doom)
@@ -247,23 +263,24 @@ t_bool	readscene(char *str, t_doom *doom)
 
 void	print_array(t_doom *doom)
 {
-	int i = 0;
+	int	i;
 
-	while(i < doom->scene_len)
+	i = 0;
+	while (i < doom->scene_len)
 	{
 		printf("%s\n", doom->scene[i]);
 		i++;
 	}
-	
 }
 
 void	print_stuff(t_doom *doom)
 {
 	int i = 0;
-	
-	printf("scene_len = %d\n", doom->scene_len);		
-	printf("\nobject_count = %d\n\n", doom->object_count);
-	while(i < doom->object_count && i <= 9)
+
+	printf("scene_len = %d\n", doom->scene_len);
+	printf("\nobject_count = %d\n", doom->object_count);
+	printf("light\tposx = %f posy = %f posz = %f\n\n", doom->object[9].pos.x, doom->object[9].pos.y, doom->object[9].pos.z);
+	while(i < doom->object_count && i < 9)
 	{
 		printf("object[%d] type\t= %d\n",i , doom->object[i].type);
 		printf("object[%d] posx\t= %f posy = %f posz = %f\n", i, doom->object[i].pos.x, doom->object[i].pos.y, doom->object[i].pos.z);
@@ -275,35 +292,31 @@ void	print_stuff(t_doom *doom)
 	}
 }
 
-t_bool		parse(char *str, t_doom *doom)
+t_bool	parse(char *str, t_doom *doom)
 {
-	int i = 0;
-	int j = 0;
-	if (!readscene(str, doom))
-		return(FALSE);
-	if(!parse_quantity(doom, doom->scene[j++]))
-		return(FALSE);
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if ((!readscene(str, doom)) || \
+	(!parse_quantity(doom, doom->scene[j++])) || \
+	(!parse_light(doom, doom->scene[j++])))
+		return (FALSE);
 	j++;
-	while(i < doom->object_count)
+	while (i < doom->object_count)
 	{
-		if (!parse_type(doom, doom->scene[j++], i))
+		if ((!parse_type(doom, doom->scene[j++], i)) || \
+		(!parse_pos(doom, doom->scene[j++], i)) || \
+		(!parse_dir(doom, doom->scene[j++], i)) || \
+		(!parse_r(doom, doom->scene[j++], i)) || \
+		(!parse_material(doom, doom->scene[j++], i)) || \
+		(!parse_angle(doom, doom->scene[j++], i)))
 			return (FALSE);
-		if (!parse_pos(doom, doom->scene[j++], i))
-			return (FALSE);
-		if (!parse_dir(doom, doom->scene[j++], i))
-			return (FALSE);
-		if (!parse_r(doom, doom->scene[j++], i))
-			return (FALSE);
-		 if(!parse_material(doom, doom->scene[j++], i))
-		 	return(FALSE);
-		 if (!parse_angle(doom, doom->scene[j++], i))
-		 	return (FALSE);
 		j++;
 		i++;
 	}
-	
-	
-	print_array(doom);
-	print_stuff(doom);
+//	print_array(doom);
+//	print_stuff(doom);
 	return (TRUE);
 }

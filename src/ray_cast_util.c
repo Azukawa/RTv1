@@ -15,16 +15,14 @@
 t_ray	ray_trough_screen(t_doom *doom)
 {
 	t_ray		ret;
-//	t_fvector	ray_dir;
 	t_fvector	pixel;	
-	
+
 	ret.start = doom->cam.pos;
 	pixel.x = lerp1d(-1.0, 1.0, (1.0f / WIN_W) * (doom->sx + 0.5));
 	pixel.y = lerp1d(-0.75, 0.75, (1.0f / WIN_H) * (doom->sy + 0.5));
 	pixel.z = 1;
 	pixel = v_rot_xyz(pixel, doom->cam.rot);
 	ret.dir = v_normalize(v_sub(pixel, ret.start));
-	
 	return (ret);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   uni_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 12:25:09 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 13:03:29 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/19 18:13:11 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	quadratic_equation(t_fvector abc, float *t0, float *t1)
 	discriminant = abc.y * abc.y - 4 * (abc.x * abc.z);
 	denominator = 2 * abc.x;
 	if (discriminant < 0 || denominator == 0 || fabsf(discriminant) < 0.001f)
-	{	
+	{
 		*t0 = 0;
 		*t1 = 0;
 		return ;

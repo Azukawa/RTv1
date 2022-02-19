@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void		v_rot_x(t_fvector *vec, float rad)
+void	v_rot_x(t_fvector *vec, float rad)
 {
 	t_fvector	prev;
 
@@ -22,7 +22,7 @@ void		v_rot_x(t_fvector *vec, float rad)
 	vec->y = prev.z * sin(rad) + prev.y * cos(rad);
 }
 
-void		v_rot_y(t_fvector *vec, float rad)
+void	v_rot_y(t_fvector *vec, float rad)
 {
 	t_fvector	prev;
 
@@ -32,7 +32,7 @@ void		v_rot_y(t_fvector *vec, float rad)
 	vec->z = prev.x * sin(rad) + prev.z * cos(rad);
 }
 
-void		v_rot_z(t_fvector *vec, float rad)
+void	v_rot_z(t_fvector *vec, float rad)
 {
 	t_fvector	prev;
 
@@ -52,5 +52,3 @@ t_fvector	v_rot_xyz(t_fvector vec, t_fvector rot)
 	v_rot_z(&ret, DEG_TO_RAD * rot.z);
 	return (ret);
 }
-
-

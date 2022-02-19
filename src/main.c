@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:22:33 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/18 15:26:11 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/19 15:37:17 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	init_player(t_doom *doom)
 	doom->object[1].angle = 1;
 	doom->object[1].type = CONE;
 	doom->object[1].material = 0;
-	
+
 	doom->object[2].pos.z = 40;
 	doom->object[2].pos.x = 0;
 	doom->object[2].pos.y = 5;
@@ -71,7 +71,7 @@ static void	init_player(t_doom *doom)
 	doom->object[3].angle = 0;
 	doom->object[3].type = CONE;
 	doom->object[3].material = 0;
-	
+
 	doom->object[9].pos.z = 0;
 	doom->object[9].pos.x = 0;
 	doom->object[9].pos.y = 0;
@@ -90,7 +90,7 @@ static void	init_player(t_doom *doom)
 	doom->material[1].diffuse.green = 0.7;
 	doom->material[1].diffuse.blue = 0.7;
 	doom->material[1].reflection = 1;
-	
+
 	doom->material[2].diffuse.red = 0;
 	doom->material[2].diffuse.green = 0;
 	doom->material[2].diffuse.blue = 1;
@@ -125,7 +125,7 @@ static void	init_player(t_doom *doom)
 //	doom->cylinder[0].dir.z = 0;
 //	doom->cylinder[0].r = 70;
 //	doom->plane[0].material = 0;
-	
+
 //	doom->cone[0].pos.x = 200;
 //	doom->cone[0].pos.y = 200;
 //	doom->cone[0].pos.z = 200;
@@ -134,7 +134,7 @@ static void	init_player(t_doom *doom)
 //	doom->cone[0].dir.z = 0;
 //	doom->cone[0].r = 0;
 //	doom->cone[0].angle = 1 ;
-	
+
 	doom->light[0].pos.x = 0;//WIN_W/2;
 	doom->light[0].pos.y = 0;//WIN_H/2;
 	doom->light[0].pos.z = 0;
@@ -195,7 +195,7 @@ void		draw_to_window(t_doom *doom)
 		if (SDL_RenderCopy(doom->rend.renderer, doom->rend.win_tex, NULL, NULL) < 0)
 			ft_getout(SDL_GetError());
 		SDL_RenderPresent(doom->rend.renderer);
-	
+
 }
 
 /*
@@ -208,14 +208,11 @@ static void	loop(t_doom	*doom)
 {
 	SDL_Event	e;
 
-//	SDL_PollEvent(&e);
 	SDL_WaitEvent(&e);
 	if (e.window.event == SDL_WINDOWEVENT_CLOSE)
 		doom->rend.run = FALSE;
-
-	
-	keyevent(doom, &e);
-	if(doom->run == TRUE)	
+	//keyevent(doom, &e);
+	if (doom->run == TRUE)
 	{
 		ft_bzero(doom->rend.win_buffer.px, WIN_H * WIN_W * sizeof(uint32_t));
 		ales_rayc(doom);
@@ -231,16 +228,17 @@ int	main1(int argc, char **argv)
 	ft_bzero(&doom.rend, sizeof(t_rend));
 	doom.rend.win_buffer.w = WIN_W;
 	doom.rend.win_buffer.h = WIN_H;
-	if(!(doom.rend.win_buffer.px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W)))
+	if (!(doom.rend.win_buffer.px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W)))
 	{
 		write(1, "fail to malloc\n", 20);
 		doom.rend.win_buffer.px = NULL;
 		cleanup(&doom);
-		return(-1);
+		return (-1);
 	}
 	init(&doom);
-//	while (doom.rend.run)
-//		loop(&doom);
+	if (parse(argv[1], &doom))
+		while (doom.rend.run)
+			loop(&doom);
 	parse(argv[1], &doom);
 	cleanup(&doom);
 	return (0);

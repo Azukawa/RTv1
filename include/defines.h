@@ -16,10 +16,10 @@
 # include <stdint.h>
 
 //WINDOW
-# define WIN_W	400
-# define WIN_H	300
-# define WIN_HW 200
-# define WIN_HH 150
+# define WIN_W	1000
+# define WIN_H	750
+# define WIN_HW 500
+# define WIN_HH 375
 # define WIN_NAME	"RTv1 build version 0.1"
 
 typedef struct s_fvector {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_intersect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 12:35:31 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 16:51:59 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/19 18:28:05 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ t_fvector planenormal, t_fvector planepoint)
 t_bool	ray_plane_intersect(t_ray *r, t_object *p, float *t)
 {
 	t_fvector	ret;
+	float		dot;
 
-	if (v_dot(r->dir, p->dir) == 0)
+	dot = v_dot(r->dir, p->dir);
+	if (fabs(dot) <= 0)
 		return (FALSE);
-	ret = plane_intersect_point(r->dir, r->start, p->dir, p->pos);
+	ret.z = v_dot(v_sub(p->pos, r->start), p->dir) / dot;
 	if (ret.z <= 0)
 		return (FALSE);
-	if (/*two_point_dist(ret, p->pos) > 60 ||*/ ret.z >= *t)
+	if (ret.z >= *t)
 		return (FALSE);
-	*t = v_len(v_sub(ret, r->start));
-	if (*t <= 0)
-		return (FALSE);
+	*t = ret.z;
 	return (TRUE);
 }
 
@@ -52,7 +52,7 @@ t_bool	ray_sphere_intersect(t_ray *r, t_object *s, float *t)
 	float		discr;
 	float		t0;
 	float		t1;
-	t_fvector	dist;	
+	t_fvector	dist;
 
 	dist = v_sub(r->start, s->pos);
 	b = 2 * v_dot(r->dir, dist);
@@ -101,11 +101,11 @@ t_bool	ray_cone_intersect(t_ray *r, t_object *obj, float *result)
 {
 	t_fvector	abc;
 	t_fvector	r2o;
-	float		t0;	
-	float		t1;	
+	float		t0;
+	float		t1;
 	float		c_fctr;
 
-	c_fctr = (1 + obj->angle * obj->angle);
+	c_fctr = (1 + (obj->angle * DEG_TO_RAD) * (obj->angle * DEG_TO_RAD));
 	r2o = v_sub(r->start, obj->pos);
 	abc.x = v_dot(r->dir, r->dir) - c_fctr
 		* v_dot(r->dir, obj->dir) * v_dot(r->dir, obj->dir);
