@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/18 13:20:16 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/19 20:38:05 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ float		two_point_dist(t_fvector a, t_fvector b);
 void		quadratic_equation(t_fvector abc, float *t0, float *t1);
 float		ft_fmin(float a, float b);
 float		ft_fmax(float a, float b);
-t_fvector	plane_intersect_point(t_fvector ray, t_fvector ray_origin,t_fvector planenormal, t_fvector planepoint);
+t_fvector	plane_intersect_point(t_fvector ray, t_fvector ray_origin, \
+t_fvector planenormal, t_fvector planepoint);
 t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);
@@ -181,5 +182,22 @@ void		v_rot_z(t_fvector *vec, float rad);
 t_fvector	v_rot_xyz(t_fvector vec, t_fvector rot);
 void		draw_to_window(t_doom *doom);
 t_bool		parse(char *str, t_doom *doom);
+t_bool		readscene(char *str, t_doom *doom);
+t_bool		parse_light(t_doom *doom, char *str);
+t_bool		saveline(char *ret, char *str);
+t_bool		parse_angle(t_doom *doom, char *str, int index);
+t_bool		parse_material(t_doom *doom, char *str, int index);
+t_bool		parse_r(t_doom *doom, char *str, int index);
+t_bool		parse_dir(t_doom *doom, char *str, int index);
+t_bool		parse_pos(t_doom *doom, char *str, int index);
+t_bool		str_to_int(int *i, char *str, float *pos);
+t_bool		val_sym(char c, int i);
+t_bool		parse_type(t_doom *doom, char *str, int index, int i);
+t_bool		parse_quantity(t_doom *doom, char *str);
+void		skip_white(int *i, char *str);
+void		init_material(t_doom *doom);
+void		init_light(t_doom *doom);
+void		init_player(t_doom *doom);
+void		init(t_doom *doom);
 
 #endif

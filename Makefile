@@ -18,7 +18,10 @@ SRC_LIST = draw_pixel.c \
 		ray_intersect.c \
 		ray_cast_util.c \
 		vector_rotation.c \
-		parse.c
+		parse_1.c \
+		parse_2.c \
+		parse_3.c \
+		init.c
 SRCS = $(addprefix $(SRC_DIR),$(SRC_LIST))
 OBJS = $(addprefix $(OBJ_DIR),$(SRC_LIST:.c=.o))
 
