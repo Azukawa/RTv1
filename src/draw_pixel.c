@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_pixel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 14:53:41 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/16 19:15:34 by alero            ###   ########.fr       */
+/*   Created: 2022/02/20 21:12:21 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:12:24 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 /*
 *	Colors the pixel in given coordinates of the given buffer as the given

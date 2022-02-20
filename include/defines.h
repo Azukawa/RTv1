@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eniini <eniini@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:13 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/16 11:24:29 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/20 16:09:24 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include <stdint.h>
 
 //WINDOW
-# define WIN_W	1000
-# define WIN_H	750
-# define WIN_HW 500
-# define WIN_HH 375
+# define WIN_W	400
+# define WIN_H	300
+# define WIN_HW 200
+# define WIN_HH 150
 # define WIN_NAME	"RTv1 build version 0.1"
 
 typedef struct s_fvector {
@@ -28,7 +28,6 @@ typedef struct s_fvector {
 	float	z;
 }			t_fvector;
 typedef t_fvector	t_fvec3;
-
 
 //Datatype to store an ARBG image data. Each pixel can be found by calculating
 //[(h * y) + (x % w)]

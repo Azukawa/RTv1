@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 21:22:33 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/19 20:39:43 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:12:50 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 static void	cleanup(t_doom *doom)
 {
@@ -60,7 +60,7 @@ int	main1(int argc, char **argv)
 {
 	t_doom		doom;
 
-	ft_bzero(&doom.rend, sizeof(t_rend));
+	ft_bzero(&doom, sizeof(t_doom));
 	doom.rend.win_buffer.w = WIN_W;
 	doom.rend.win_buffer.h = WIN_H;
 	doom.rend.win_buffer.px = ft_memalloc(sizeof(uint32_t) * WIN_H * WIN_W);

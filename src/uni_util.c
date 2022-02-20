@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 12:25:09 by alero             #+#    #+#             */
-/*   Updated: 2022/02/19 18:13:11 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/20 21:15:12 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:15:15 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 float	lerp1d(float a, float b, float t)
 {

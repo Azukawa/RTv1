@@ -6,11 +6,11 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 20:02:27 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/19 20:30:48 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 void	init_material(t_doom *doom)
 {
@@ -49,13 +49,13 @@ void	init_player(t_doom *doom)
 	doom->sy = 0;
 	doom->cam.pos.x = 0;
 	doom->cam.pos.y = 0;
-	doom->cam.pos.z = 0;
+	doom->cam.pos.z = -50;
 	doom->cam.rot.x = 0;
 	doom->cam.rot.y = 0;
 	doom->cam.rot.z = 0;
-	doom->cam.dir = v_rot_xyz(doom->cam.dir, doom->cam.rot);
 	doom->object_count = 2;
 	doom->run = TRUE;
+	doom->cam.up = v_normalize(v_cross(doom->cam.right, doom->cam.front));
 }
 
 /*

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ales_rayc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 13:46:22 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 19:18:49 by alero            ###   ########.fr       */
+/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 void	cone_normal(t_fvector new_start, t_object *object, t_fvector *n)
 {
@@ -46,84 +46,6 @@ t_fvector	find_object_normal(t_object *object, t_fvector new_start)
 	return (v_normalize(n));
 }
 
-void	calculate_lighting(t_doom *doom, t_fvector n,
-t_fvector new_start, int cur_obj, uint32_t *color)
-{
-	float		red;
-	float		green;
-	float		blue;
-	t_ray		light_ray;
-	t_bool		in_shadow;
-	float		t1;
-	t_fvector	dist;
-	t_material	current_mat;
-
-	current_mat = doom->material[doom->object[cur_obj].material];
-	red = green = blue = 0;	
-	dist = v_sub(doom->object[9].pos, new_start);
-		if (v_dot(n, dist) <= 0)
-		return ;
-	t1 = sqrtf(v_dot(dist, dist));
-	if (t1 <= 0)
-		return ;
-	light_ray.start = v_add(new_start, v_mult(n, 0.05));
-	light_ray.dir = v_mult(dist, (1/t1));
-	in_shadow = FALSE;
-	int	k = 0;
-	while (k < doom->object_count)
-	{
-		if (v_dot(n, light_ray.dir) > 0 && k != cur_obj && ray_object_intersect(&light_ray, &doom->object[k], &t1))
-		{				
-			in_shadow = TRUE;
-			return ;
-		}
-		k++;
-	}
-	if (!in_shadow /*&& mfv_dot_product(n, light_ray.dir) >0*/ )
-	{
-		float lambert = v_dot(light_ray.dir, n);
-		red = red + lambert * doom->object[9].intensity.red * current_mat.diffuse.red;
-		green = green + lambert * doom->object[9].intensity.green * current_mat.diffuse.green;
-		blue = blue + lambert * doom->object[9].intensity.blue * current_mat.diffuse.blue;
-	}
-	*color = get_color2(ft_fmin(red * 255.0f, 255.0f), ft_fmin(green * 255.0f, 255.0f), ft_fmin(blue * 255.0f, 255.0f));
-	return ;
-}
-
-void	raytracer(t_doom *doom)
-{
-	t_ray		ray;
-	uint32_t	color;
-	float		t;
-	int			cur_obj;
-	int			i;
-	t_fvector	n;
-
-	color = 0x00000000;
-//	ray.start = doom->cam.pos;
-	ray = ray_trough_screen(doom);
-	t = 20000.0f;
-	cur_obj= -1;
-	i = 0;
-	while (i < doom->object_count)
-	{
-		if(ray_object_intersect(&ray, &doom->object[i], &t))
-			cur_obj = i;
-		i++;
-	}
-	if (draw_light(&ray, doom, &t))
-		return ;
-	if (cur_obj == -1)
-	{
-//		draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
-		return ;
-	}
-	t_fvector	new_start = v_add(ray.start, v_mult(ray.dir, t));
-	n = find_object_normal(&doom->object[cur_obj], new_start);
-	calculate_lighting(doom, n, new_start, cur_obj, &color);
-	draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
-}
-
 void	iter_screen(t_doom *doom)
 {
 	doom->sx = 0;
@@ -132,28 +54,16 @@ void	iter_screen(t_doom *doom)
 	{
 		while (doom->sx < WIN_W)
 		{
-			raytracer(doom);
+			raytracer(doom, 0);
 			doom->sx++;
 		}
-	doom->sy++;
-	doom->sx = 0;
+		doom->sy++;
+		doom->sx = 0;
 	}
 }
 
-void ales_rayc(t_doom *doom)
-{		
-//	doom->object[9].pos.x += doom->xvar;
-//	doom->object[9].pos.y += doom->yvar;
-//	doom->object[9].pos.z += doom->zvar;
-
-	doom->cam.rot.x += doom->xvar;
-	doom->cam.rot.y += doom->yvar;
-	doom->cam.rot.z += doom->zvar;
-	
-
-	doom->xvar = 0;
-	doom->yvar = 0;
-	doom->zvar = 0;
+void	ales_rayc(t_doom *doom)
+{
 	iter_screen(doom);
 	doom->run = FALSE;
 }

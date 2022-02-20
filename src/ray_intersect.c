@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 12:35:31 by alero             #+#    #+#             */
-/*   Updated: 2022/02/19 18:28:05 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/20 21:14:57 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:15:01 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 t_fvector	plane_intersect_point(t_fvector ray, t_fvector ray_origin,
 t_fvector planenormal, t_fvector planepoint)

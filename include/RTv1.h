@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doom.h                                             :+:      :+:    :+:   */
+/*   RTv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/19 20:38:05 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/20 22:49:22 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DOOM_H
-# define DOOM_H
+#ifndef RTV1_H
+# define RTV1_H
 
 //c lib
 # include <string.h> //for sterror
@@ -26,23 +26,21 @@
 //doom
 # include "defines.h"
 
-enum type {
-
+enum e_type {
 	SPHERE,
 	PLANE,
 	CYL,
 	CONE,
 	LIGHT
-
 };
 
-typedef	struct	s_color{
-	float red;
-	float green;
-	float blue;
+typedef struct s_color{
+	float	red;
+	float	green;
+	float	blue;
 }				t_color;
 
-typedef struct	s_object{
+typedef struct s_object{
 	t_fvector	pos;
 	t_fvector	dir;
 	int			material;
@@ -52,42 +50,41 @@ typedef struct	s_object{
 	t_color		intensity;
 }				t_object;
 
-typedef	struct	s_plane{
+typedef struct s_plane{
 	t_fvector	pos;
 	t_fvector	dir;
 	int			material;
 }				t_plane;
 
-typedef struct	s_cylinder{
+typedef struct s_cylinder{
 	t_fvector	pos;
 	t_fvector	dir;
 	float		r;
 	int			material;
 }				t_cylinder;
 
-typedef struct	s_cone{
+typedef struct s_cone{
 	t_fvector	pos;
 	t_fvector	dir;
 	float		r;
 	float		angle;
 }				t_cone;
 
-typedef struct	s_ray{
+typedef struct s_ray{
 	t_fvector	start;
 	t_fvector	dir;
 }				t_ray;
 
-typedef struct	s_material{
+typedef struct s_material{
 	t_color	diffuse;
 	float	reflection;
 }				t_material;
 
-typedef	struct s_sphere{
+typedef struct s_sphere{
 	t_fvector	pos;
 	float		r;
 	int			material;
 }				t_sphere;
-
 
 typedef struct s_light{
 	t_color		intensity;
@@ -95,10 +92,18 @@ typedef struct s_light{
 
 }				t_light;
 
-typedef struct	s_cam{
+typedef struct s_cam{
 	t_fvector	pos;
 	t_fvector	dir;
 	t_fvector	rot;
+	float		aspect;
+	float		fov;
+	float		horz;
+	float		vert;
+	t_fvector	norm;
+	t_fvector	front;
+	t_fvector	right;
+	t_fvector	up;
 }				t_cam;
 
 //Holds everything related directly to SDL's drawbuffer.
@@ -199,5 +204,10 @@ void		init_material(t_doom *doom);
 void		init_light(t_doom *doom);
 void		init_player(t_doom *doom);
 void		init(t_doom *doom);
+t_fvector	find_object_normal(t_object *object, t_fvector new_start);
+void		cone_normal(t_fvector new_start, t_object *object, t_fvector *n);
+void		raytracer(t_doom *doom, int i);
+t_bool		parse_c_dir(t_doom *doom, char *str);
+t_bool		parse_c_pos(t_doom *doom, char *str);
 
 #endif

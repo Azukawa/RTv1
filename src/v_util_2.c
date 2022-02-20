@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   v_util_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 12:18:29 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 13:02:46 by alero            ###   ########.fr       */
+/*   Created: 2022/02/20 21:15:32 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:15:35 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 //This function subtracts  t_fvector b from t_fvector a
 t_fvector	v_sub(t_fvector a, t_fvector b)

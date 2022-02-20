@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   v_util_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alero <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 12:12:03 by alero             #+#    #+#             */
-/*   Updated: 2022/02/16 13:02:29 by alero            ###   ########.fr       */
+/*   Created: 2022/02/20 21:15:23 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/20 21:15:27 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doom.h"
+#include "RTv1.h"
 
 t_fvector	v_cross(t_fvector va, t_fvector vb)
 {
