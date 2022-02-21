@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:28:59 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 14:14:13 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,17 @@ t_bool	val_sym(char c, int i)
 
 t_bool	str_to_int(int *i, char *str, float *pos)
 {
-	char	ret[3];
+	char	ret[4];
 	int		j;
 
-	ft_bzero(ret, 3);
+	ft_bzero(ret, 4);
 	j = 0;
-	while (str[*i] != ',' && str[*i] != ';' && j < 3)
+	while (str[*i] != ',' && str[*i] != ';')
 	{
 		if (!val_sym(str[*i], j))
 			return (FALSE);
-		ret[j] = str[*i];
+		if (j < 3)
+			ret[j] = str[*i];
 		*i += 1;
 		j++;
 	}

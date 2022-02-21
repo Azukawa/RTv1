@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 22:13:37 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 22:47:50 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/20 23:51:34 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_bool static	str_to_rot(int *i, char *str, float *pos)
 		*i += 1;
 		j++;
 	}
+	while (str[*i] != ',' && str[*i] != ';')
+		*i += 1;
 	*i += 1;
 	*pos = ft_clamp_i(ft_atoi(ret), 0, 360);
 	if (*pos >= 0 && *pos <= 360)

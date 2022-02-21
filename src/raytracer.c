@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 20:41:45 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 17:37:36 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,18 @@ int cur_obj)
 static uint32_t	assign_color(t_doom *doom, float lambert, t_material mat)
 {
 	t_fvector	col;
-
+//	if (lambert > 0)
+//	{
 	col.x = lambert * doom->object[9].intensity.red * mat.diffuse.red;
 	col.y = lambert * doom->object[9].intensity.green * mat.diffuse.green;
 	col.z = lambert * doom->object[9].intensity.blue * mat.diffuse.blue;
 	return (get_color2(ft_fmin(col.x * 255.0f, 255.0f), ft_fmin(col.y * 255.0f,
 				255.0f), ft_fmin(col.z * 255.0f, 255.0f)));
+//	}
+//	return (0);
 }
 
-static void	calculate_lighting(t_doom *doom, t_fvector new_start, int cur_obj,
+static void	calculate_lighting(t_doom *doom, t_ray *ray, int cur_obj,
 uint32_t *color)
 {
 	t_ray		lr;
@@ -52,16 +55,19 @@ uint32_t *color)
 	t_material	mat;
 	t_fvector	n;
 
-	n = find_object_normal(&doom->object[cur_obj], new_start);
+	n = find_object_normal(&doom->object[cur_obj], ray);
+	if (v_dot(n, ray->dir) > 0)
+		v_mult(n, -1);
 	mat = doom->material[doom->object[cur_obj].material];
-	dist = v_sub(doom->object[9].pos, new_start);
+	dist = v_sub(doom->object[9].pos, ray->start);
 	if (v_dot(n, dist) <= 0)
 		return ;
 	t1 = sqrtf(v_dot(dist, dist));
 	if (t1 <= 0)
 		return ;
-	lr.start = v_add(new_start, v_mult(n, 0.05));
+	lr.start = v_add(ray->start, v_mult(n, 0.05));
 	lr.dir = v_mult(dist, (1 / t1));
+	lr.dir = v_normalize(lr.dir);
 	if (in_shadow(doom, lr, n, cur_obj))
 		return ;
 	*color = assign_color(doom, v_dot(lr.dir, n), mat);
@@ -90,6 +96,7 @@ void	raytracer(t_doom *doom, int i)
 	if (cur_obj == -1)
 		return ;
 	ray.start = v_add(ray.start, v_mult(ray.dir, t));
-	calculate_lighting(doom, ray.start, cur_obj, &color);
+//	t1000 = t;
+	calculate_lighting(doom, &ray, cur_obj, &color);
 	draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
 }

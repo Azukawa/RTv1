@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:12:50 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 14:09:30 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	main1(int argc, char **argv)
 	if (parse(argv[1], &doom))
 		while (doom.rend.run)
 			loop(&doom);
-	parse(argv[1], &doom);
 	cleanup(&doom);
 	return (0);
 }

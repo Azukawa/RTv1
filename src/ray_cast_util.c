@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:13:52 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:13:57 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 21:14:21 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_bool	ray_object_intersect(t_ray *ray, t_object *obj, float *t)
 	if (obj->type == SPHERE)
 		return (ray_sphere_intersect(ray, obj, t));
 	else if (obj->type == PLANE)
+	//	return (old_ray_plane_intersect(ray, obj, t));
 		return (ray_plane_intersect(ray, obj, t));
 	else if (obj->type == CYL)
 		return (ray_cyl_intersect(ray, obj, t));

@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/20 22:49:22 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 20:50:38 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "../libft/includes/ft_gfx.h"
 //doom
 # include "defines.h"
+
+///float 	t1000;
 
 enum e_type {
 	SPHERE,
@@ -172,8 +174,9 @@ float		two_point_dist(t_fvector a, t_fvector b);
 void		quadratic_equation(t_fvector abc, float *t0, float *t1);
 float		ft_fmin(float a, float b);
 float		ft_fmax(float a, float b);
-t_fvector	plane_intersect_point(t_fvector ray, t_fvector ray_origin, \
-t_fvector planenormal, t_fvector planepoint);
+t_bool		plane_intersect_point(t_fvector ray, t_fvector ray_origin, \
+t_fvector	 planenormal, t_fvector planepoint, t_fvector *ret);
+t_bool		old_ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);
@@ -204,7 +207,7 @@ void		init_material(t_doom *doom);
 void		init_light(t_doom *doom);
 void		init_player(t_doom *doom);
 void		init(t_doom *doom);
-t_fvector	find_object_normal(t_object *object, t_fvector new_start);
+t_fvector	find_object_normal(t_object *object, t_ray *ray);
 void		cone_normal(t_fvector new_start, t_object *object, t_fvector *n);
 void		raytracer(t_doom *doom, int i);
 t_bool		parse_c_dir(t_doom *doom, char *str);

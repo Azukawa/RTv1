@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:27:36 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/21 17:55:16 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_bool	parse_dir(t_doom *doom, char *str, int index)
 		return (FALSE);
 	if (!str_to_int(&i, str, &doom->object[index].dir.z))
 		return (FALSE);
+	doom->object[index].dir = v_normalize(doom->object[index].dir);
 	return (TRUE);
 }
 
