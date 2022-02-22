@@ -2,7 +2,7 @@ NAME	=	RTv1
 
 #compiler
 CC	=	gcc
-LFLAGS	=	-Wall -Wextra -g -o3 #-Werror -O3
+LFLAGS	=	-Wall -Wextra -g #-Werror -O3
 
 #sources & object files
 SRC_DIR =	./src/
@@ -53,7 +53,7 @@ $(OBJ_DIR)%.o:$(SRC_DIR)%.c
 #	make -C libft
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(SDL_CFLAGS) -L./libft/ -lft -lm -o $(NAME)
+	$(CC) $(OBJS) $(SDL_CFLAGS) $(LFLAGS) -lm -o $(NAME)
 
 $(SDL_BIN) :
 	echo "Extracting SDL archives..."

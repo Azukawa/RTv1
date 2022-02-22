@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 20:41:45 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 11:37:46 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 21:58:39 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ uint32_t *color)
 	lr.dir = v_mult(dist, (1 / t1));
 	lr.dir = v_normalize(lr.dir);
 	doom->t = t1;
-	if (in_shadow(doom, lr, n, cur_obj))
+	if (in_shadow(doom, lr, n, cur_obj)){
+		*color = 0xFFFFFF;
+
 		return ;
+	}
 	*color = assign_color(doom, v_dot(lr.dir, n), mat);
 }
 

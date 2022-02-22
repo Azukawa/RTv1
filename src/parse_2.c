@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:27:36 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/21 17:55:16 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:14:19 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_bool	parse_angle(t_doom *doom, char *str, int index)
 	skip_white(&i, str);
 	if (ft_isdigit(str[i]))
 	{
-		val = ft_clamp_i(ft_atoi(&str[i]), 5, 45);
+		val = ft_clamp_i(ft_atoi(&str[i]), 5, 70);
 		doom->object[index].angle = val;
 		return (TRUE);
 	}

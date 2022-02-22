@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:37 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:12:41 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 20:29:04 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	keyevent(t_doom *doom, SDL_Event *e)
 				doom->rend.run = FALSE;
 			doom->cam.dir = v_rot_xyz(doom->cam.dir, doom->cam.rot);
 		}
-		else if (e->window.event == SDL_WINDOWEVENT_CLOSE)
+		else if (e->type == SDL_WINDOWEVENT \
+		&& e->window.event == SDL_WINDOWEVENT_CLOSE)
 			doom->rend.run = FALSE;
 		else if (e->type == SDL_WINDOWEVENT \
 		&& e->window.event == SDL_WINDOWEVENT_EXPOSED)

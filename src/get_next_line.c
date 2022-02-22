@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 12:32:06 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 13:42:11 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 16:58:09 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*concat(char **line, char *buf)
 	return (*line);
 }
 
-static int		seeknewline(const char *s)
+static int	seeknewline(const char *s)
 {
 	int			i;
 
@@ -48,7 +48,7 @@ static int		seeknewline(const char *s)
 	return (-1);
 }
 
-static int		gnlpt2(char **rem, char **line)
+static int	gnlpt2(char **rem, char **line)
 {
 	int			n;
 	char		*temp;
@@ -87,7 +87,8 @@ static int	gnlpt3(const int *fd, char **line, char **rem)
 		if (ret == -1)
 			return (-1);
 		buf[ret] = '\0';
-		if ((n = seeknewline(buf)) == -1)
+		n = seeknewline(buf);
+		if (n == -1)
 			*line = concat(line, buf);
 		else
 		{
@@ -102,7 +103,7 @@ static int	gnlpt3(const int *fd, char **line, char **rem)
 
 int	get_next_line(const int fd, char **line)
 {
-	static char *rem[FD_MAX];
+	static char	*rem[FD_MAX];
 	int			n;
 
 	n = 0;

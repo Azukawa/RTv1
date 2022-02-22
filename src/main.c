@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 12:41:56 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 20:04:22 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static void	loop(t_doom	*doom)
 {
 	SDL_Event	e;
 
-	SDL_WaitEvent(&e);
-	if (e.window.event == SDL_WINDOWEVENT_CLOSE)
-		doom->rend.run = FALSE;
+//	SDL_WaitEvent(&e);
+//	if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE)
+//		doom->rend.run = FALSE;
 	keyevent(doom, &e);
 	if (doom->run == TRUE)
 	{
