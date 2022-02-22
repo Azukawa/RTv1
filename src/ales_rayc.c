@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 13:46:22 by alero             #+#    #+#             */
-/*   Updated: 2022/02/22 13:50:24 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 14:29:57 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ t_fvector	find_object_normal(t_object *object, t_ray *ray)
 	if (object->type == SPHERE)
 		n = v_sub(ray->start, object->pos);
 	else if (object->type == PLANE)
-	{
 		n = object->dir;
-		if (v_dot(ray->dir, n) > 0)
-			n = v_mult(n, -1);
-	}
 	else if (object->type == CONE)
 		cone_normal(ray->start, object, &n);
 	else
@@ -44,6 +40,8 @@ t_fvector	find_object_normal(t_object *object, t_ray *ray)
 		pt = v_add(object->pos, v_mult(object->dir, t));
 		n = v_sub(ray->start, pt);
 	}
+	if (v_dot(ray->dir, n) > 0)
+		n = v_mult(n, -1);
 	return (v_normalize(n));
 }
 
