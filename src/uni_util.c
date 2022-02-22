@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:15:12 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:15:15 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 10:41:58 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	quadratic_equation(t_fvector abc, float *t0, float *t1)
 	denominator = 2 * abc.x;
 	if (discriminant < 0 || denominator == 0 || fabsf(discriminant) < 0.001f)
 	{
-		*t0 = 0;
-		*t1 = 0;
+		*t0 = -1;
+		*t1 = -1;
 		return ;
 	}
 	*t0 = (-abc.y - sqrtf(discriminant)) / denominator;

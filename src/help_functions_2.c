@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   help_functions_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/15 20:26:56 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/22 12:26:09 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/22 12:27:40 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/22 12:56:18 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "RTv1.h"
 
-/*
-**	Allocates [size] bytes of new memory initialized to 0's and returns it.
-**	Note: malloc(0) would result in implementation-dependent behavior,
-*	and therefore passing 0 as argument will always return NULL.
-*/
 void	*ft_memalloc(size_t size)
 {
 	void	*mem;
@@ -28,4 +23,31 @@ void	*ft_memalloc(size_t size)
 		return (NULL);
 	ft_bzero(mem, size);
 	return (mem);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*dststr;
+	unsigned const char	*srcstr;
+
+	dststr = dst;
+	srcstr = src;
+	i = 0;
+	while (i < n)
+	{
+		dststr[i] = srcstr[i];
+		i++;
+	}
+	return ((void *)dst);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 20:02:27 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:05:25 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 12:29:28 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,19 @@ void	init_player(t_doom *doom)
 void	init(t_doom *doom)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		ft_getout(SDL_GetError());
+		exit(1);
 	doom->rend.win = SDL_CreateWindow(WIN_NAME, SDL_WINDOWPOS_UNDEFINED, \
 		SDL_WINDOWPOS_UNDEFINED, WIN_W, WIN_H, 0);
 	if (!doom->rend.win)
-		ft_getout(SDL_GetError());
+		exit(1);
 	doom->rend.renderer = SDL_CreateRenderer(doom->rend.win, -1, \
 		SDL_RENDERER_ACCELERATED);
 	if (!doom->rend.renderer)
-		ft_getout(SDL_GetError());
+		exit(1);
 	doom->rend.win_tex = SDL_CreateTexture(doom->rend.renderer, \
 		SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIN_W, WIN_H);
 	if (!doom->rend.win_tex)
-		ft_getout(SDL_GetError());
+		exit(1);
 	doom->rend.run = TRUE;
 	init_material(doom);
 	init_light(doom);

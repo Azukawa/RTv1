@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:28:59 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/21 14:14:13 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 11:43:30 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_bool	parse_quantity(t_doom *doom, char *str)
 	if (str[i++] != 'q')
 		return (FALSE);
 	skip_white(&i, str);
-	if (str[i] >= 48 && str[i] <= 57)
+	if (str[i] >= '1' && str[i] <= '9')
 	{
 		doom->object_count = ft_atoi(&str[i]);
 		return (TRUE);

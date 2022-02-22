@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/21 20:50:38 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 13:39:11 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,21 @@
 # include <errno.h>  //for errno macro
 # include <unistd.h> //for write TBD
 # include <fcntl.h>  //for O_RDONLY and open
+# include <stddef.h>
 //SDL
 # include "../libSDL2/include/SDL2/SDL.h"
 //libft
-# include "../libft/includes/libft.h"
-# include "../libft/includes/ft_gfx.h"
+//# include "../libft/includes/libft.h"
+//# include "../libft/includes/ft_gfx.h"
 //doom
 # include "defines.h"
 
-///float 	t1000;
+# define DEG_TO_RAD 0.01745329251
+# define RAD_TO_DEG 57.2957795131
+
+typedef int		t_bool;
+# define TRUE	1
+# define FALSE	0
 
 enum e_type {
 	SPHERE,
@@ -153,6 +159,7 @@ typedef struct s_doom {
 	t_bool		run;
 	char		scene[100][100];
 	int			scene_len;
+	float		t;
 }				t_doom;
 
 uint32_t	color_lerp(uint32_t c1, uint32_t c2, double p);
@@ -212,5 +219,17 @@ void		cone_normal(t_fvector new_start, t_object *object, t_fvector *n);
 void		raytracer(t_doom *doom, int i);
 t_bool		parse_c_dir(t_doom *doom, char *str);
 t_bool		parse_c_pos(t_doom *doom, char *str);
+int			ft_isdigit(int c);
+int			ft_atoi(const char *str);
+int			ft_clamp_i(int value, int min, int max);
+void		ft_bzero(void *s, size_t n);
+void		*ft_memalloc(size_t size);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
+size_t		ft_strlen(const char *s);
+int			get_next_line(const int fd, char **line);
+char		*ft_strdup(const char *s1);
+char		*ft_strjoin(char const *s1, char const *s2);
+void		ft_strdel(char **as);
+char		*ft_strndup(const char *s1, size_t n);
 
 #endif

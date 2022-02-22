@@ -6,31 +6,11 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 13:46:22 by alero             #+#    #+#             */
-/*   Updated: 2022/02/21 17:36:45 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 13:50:24 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RTv1.h"
-
-// static void    normal_cone(t_ray *ray, t_object *obj, t_fvector *n)
-// {
-//     t_fvector    hit;
-//     t_fvector    hit_normal;
-//     t_fvector    ray_to_obj;
-//     float    obj_to_hit_proj;
-
-// 	float near = t1000;
-//     ray_to_obj = v_sub(ray->start, obj->pos);
-// 	obj->dir = v_normalize(obj->dir);
-//     obj_to_hit_proj = v_dot(ray->start, obj->dir) * near
-//         + v_dot(ray_to_obj, obj->dir);
-//     obj_to_hit_proj *= (1 + obj->angle * obj->angle);
-//     hit = v_add(ray->start, v_mult(ray->dir, near));
-//     hit_normal = v_mult(obj->dir, obj_to_hit_proj);
-//     hit_normal = v_sub(v_sub(hit, obj->pos), hit_normal);
-// 	hit_normal =  v_normalize(hit_normal);
-// 	*n = hit_normal;
-// }
 
 void	cone_normal(t_fvector new_start, t_object *object, t_fvector *n)
 {
@@ -52,11 +32,11 @@ t_fvector	find_object_normal(t_object *object, t_ray *ray)
 	else if (object->type == PLANE)
 	{
 		n = object->dir;
-		n = v_mult(n, -1);
+		if (v_dot(ray->dir, n) > 0)
+			n = v_mult(n, -1);
 	}
 	else if (object->type == CONE)
 		cone_normal(ray->start, object, &n);
-		// normal_cone(ray, object, &n);
 	else
 	{
 		temp = v_sub(ray->start, object->pos);

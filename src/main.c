@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/21 14:09:30 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/22 12:41:56 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	draw_to_window(t_doom *doom)
 {
 	if (SDL_LockTexture(doom->rend.win_tex, NULL, \
 		&doom->rend.win_pixels, &doom->rend.win_pixel_pitch) < 0)
-		ft_getout(SDL_GetError());
+		exit(1);
 	ft_memcpy(doom->rend.win_pixels, doom->rend.win_buffer.px, \
 	WIN_H * doom->rend.win_pixel_pitch);
 	SDL_UnlockTexture(doom->rend.win_tex);
 	if (SDL_RenderCopy(doom->rend.renderer, doom->rend.win_tex, NULL, NULL) < 0)
-		ft_getout(SDL_GetError());
+		exit(1);
 	SDL_RenderPresent(doom->rend.renderer);
 }
 
@@ -60,6 +60,8 @@ int	main1(int argc, char **argv)
 {
 	t_doom		doom;
 
+	if (argc != 2)
+		exit(1);
 	ft_bzero(&doom, sizeof(t_doom));
 	doom.rend.win_buffer.w = WIN_W;
 	doom.rend.win_buffer.h = WIN_H;
