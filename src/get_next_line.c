@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 12:32:06 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 16:58:09 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 13:37:43 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	gnlpt2(char **rem, char **line)
 
 	if (*rem && *rem[0] != '\0')
 	{
-		if ((n = seeknewline(*rem)) == -1)
+		n = seeknewline(*rem);
+		if (n == -1)
 			*line = ft_strdup(*rem);
 		else
 		{
@@ -82,7 +83,8 @@ static int	gnlpt3(const int *fd, char **line, char **rem)
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 
-	while ((ret = read(*fd, buf, BUFF_SIZE)))
+	ret = read(*fd, buf, BUFF_SIZE);
+	while (ret)
 	{
 		if (ret == -1)
 			return (-1);
@@ -97,6 +99,7 @@ static int	gnlpt3(const int *fd, char **line, char **rem)
 			*line = concat(line, buf);
 			return (1);
 		}
+		ret = read(*fd, buf, BUFF_SIZE);
 	}
 	return (0);
 }

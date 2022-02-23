@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 20:41:45 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 21:58:39 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:49:30 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int cur_obj)
 	{
 		if (v_dot(n, light_ray.dir) > 0 && k != cur_obj
 			&& ray_object_intersect(&light_ray, &doom->object[k], &doom->t))
+			{
+			printf("doom->t = %f\tk = %d\tcur_object = %d\n", doom->t, k, cur_obj);
+
 			return (TRUE);
+			}
 		k++;
 	}
 	return (FALSE);
@@ -63,7 +67,7 @@ uint32_t *color)
 	lr.dir = v_normalize(lr.dir);
 	doom->t = t1;
 	if (in_shadow(doom, lr, n, cur_obj)){
-		*color = 0xFFFFFF;
+		//*color = 0xFFFFFF;
 
 		return ;
 	}
@@ -88,6 +92,9 @@ void	raytracer(t_doom *doom, int i)
 			cur_obj = i;
 		i++;
 	}
+//	color = assign_color(doom, 1, doom->material[doom->object[cur_obj].material]);
+//	draw_pixel(doom->sx, doom->sy, &doom->rend.win_buffer, color);
+//	return ;
 	if (draw_light(&ray, doom, &t))
 		return ;
 	if (cur_obj == -1)
