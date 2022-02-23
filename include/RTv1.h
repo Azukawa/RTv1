@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/23 19:46:24 by alero            ###   ########.fr       */
+/*   Created: 2022/02/23 20:58:49 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/23 20:58:55 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 # define RTV1_H
 
 //c lib
-# include <string.h> //for sterror
-# include <errno.h>  //for errno macro
 # include <unistd.h> //for write TBD
 # include <fcntl.h>  //for O_RDONLY and open
-# include <stddef.h>
 //SDL
 # include "../libSDL2/include/SDL2/SDL.h"
 //RTv1
@@ -135,7 +132,7 @@ typedef struct s_keys {
 }				t_keys;
 
 //superstruct that holds all the subsystem structs.
-typedef struct s_doom {
+typedef struct s_rt {
 	t_rend		rend;
 	t_keys		keys;
 	int			global_fps;
@@ -157,13 +154,13 @@ typedef struct s_doom {
 	char		scene[100][100];
 	int			scene_len;
 	float		t;
-}				t_doom;
+}				t_rt;
 
 uint32_t	color_lerp(uint32_t c1, uint32_t c2, double p);
 void		draw_pixel(uint32_t x, uint32_t y, t_buffer *buf, uint32_t color);
-void		init_tests(t_doom *doom);
-void		ales_rayc(t_doom *doom);
-void		keyevent(t_doom *doom, SDL_Event *e);
+void		init_tests(t_rt *rt);
+void		ales_rayc(t_rt *rt);
+void		keyevent(t_rt *rt, SDL_Event *e);
 t_fvector	v_cross(t_fvector va, t_fvector vb);
 float		v_dot(t_fvector va, t_fvector vb);
 float		v_len(t_fvector v);
@@ -182,37 +179,37 @@ t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);
 t_bool		ray_cone_intersect(t_ray *r, t_object *obj, float *result);
-t_ray		ray_trough_screen(t_doom *doom);
+t_ray		ray_trough_screen(t_rt *rt);
 t_bool		ray_object_intersect(t_ray *ray, t_object *obj, float *t);
-t_bool		draw_light(t_ray *ray, t_doom *doom, float *t);
+t_bool		draw_light(t_ray *ray, t_rt *rt, float *t);
 void		v_rot_x(t_fvector *vec, float rad);
 void		v_rot_y(t_fvector *vec, float rad);
 void		v_rot_z(t_fvector *vec, float rad);
 t_fvector	v_rot_xyz(t_fvector vec, t_fvector rot);
-void		draw_to_window(t_doom *doom);
-t_bool		parse(char *str, t_doom *doom);
-t_bool		readscene(char *str, t_doom *doom);
-t_bool		parse_light(t_doom *doom, char *str);
+void		draw_to_window(t_rt *rt);
+t_bool		parse(char *str, t_rt *rt);
+t_bool		readscene(char *str, t_rt *rt);
+t_bool		parse_light(t_rt *rt, char *str);
 t_bool		saveline(char *ret, char *str);
-t_bool		parse_angle(t_doom *doom, char *str, int index);
-t_bool		parse_material(t_doom *doom, char *str, int index);
-t_bool		parse_r(t_doom *doom, char *str, int index);
-t_bool		parse_dir(t_doom *doom, char *str, int index);
-t_bool		parse_pos(t_doom *doom, char *str, int index);
+t_bool		parse_angle(t_rt *rt, char *str, int index);
+t_bool		parse_material(t_rt *rt, char *str, int index);
+t_bool		parse_r(t_rt *rt, char *str, int index);
+t_bool		parse_dir(t_rt *rt, char *str, int index);
+t_bool		parse_pos(t_rt *rt, char *str, int index);
 t_bool		str_to_int(int *i, char *str, float *pos);
 t_bool		val_sym(char c, int i);
-t_bool		parse_type(t_doom *doom, char *str, int index, int i);
-t_bool		parse_quantity(t_doom *doom, char *str);
+t_bool		parse_type(t_rt *rt, char *str, int index, int i);
+t_bool		parse_quantity(t_rt *rt, char *str);
 void		skip_white(int *i, char *str);
-void		init_material(t_doom *doom);
-void		init_light(t_doom *doom);
-void		init_player(t_doom *doom);
-void		init(t_doom *doom);
+void		init_material(t_rt *rt);
+void		init_light(t_rt *rt);
+void		init_player(t_rt *rt);
+void		init(t_rt *rt);
 t_fvector	find_object_normal(t_object *object, t_ray *ray);
 void		cone_normal(t_fvector new_start, t_object *object, t_fvector *n);
-void		raytracer(t_doom *doom, int i);
-t_bool		parse_c_dir(t_doom *doom, char *str);
-t_bool		parse_c_pos(t_doom *doom, char *str);
+void		raytracer(t_rt *rt, int i);
+t_bool		parse_c_dir(t_rt *rt, char *str);
+t_bool		parse_c_pos(t_rt *rt, char *str);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *str);
 int			ft_clamp_i(int value, int min, int max);

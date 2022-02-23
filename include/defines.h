@@ -5,15 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 21:28:13 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/22 20:32:46 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/23 20:56:17 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/23 20:56:29 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
-
-# include <stdint.h>
 
 //WINDOW
 # define WIN_W	400

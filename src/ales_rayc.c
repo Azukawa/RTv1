@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 13:46:22 by alero             #+#    #+#             */
-/*   Updated: 2022/02/23 12:34:58 by esukava          ###   ########.fr       */
+/*   Created: 2022/02/23 21:00:01 by esukava           #+#    #+#             */
+/*   Updated: 2022/02/23 21:00:08 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,24 @@ t_fvector	find_object_normal(t_object *object, t_ray *ray)
 	return (v_normalize(n));
 }
 
-void	iter_screen(t_doom *doom)
+void	iter_screen(t_rt *rt)
 {
-	doom->sx = 0;
-	doom->sy = 0;
-	while (doom->sy < WIN_H)
+	rt->sx = 0;
+	rt->sy = 0;
+	while (rt->sy < WIN_H)
 	{
-		while (doom->sx < WIN_W)
+		while (rt->sx < WIN_W)
 		{
-			raytracer(doom, 0);
-			doom->sx++;
+			raytracer(rt, 0);
+			rt->sx++;
 		}
-		doom->sy++;
-		doom->sx = 0;
+		rt->sy++;
+		rt->sx = 0;
 	}
 }
 
-void	ales_rayc(t_doom *doom)
+void	ales_rayc(t_rt *rt)
 {
-	iter_screen(doom);
-	doom->run = FALSE;
+	iter_screen(rt);
+	rt->run = FALSE;
 }

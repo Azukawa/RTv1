@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:15:23 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 21:15:27 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 21:03:28 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ float	v_len(t_fvector v)
 	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-/*
-*	Vector is normalized i.e. turned into an unit vector, by dividing each of
-*	its components by its magnitude.
-*/
 t_fvector	v_normalize(t_fvector v)
 {
 	t_fvector	ret;
@@ -47,8 +43,6 @@ t_fvector	v_normalize(t_fvector v)
 	ret.z = v.z / l;
 	return (ret);
 }
-
-//This function adds t_fvectr a to t_fvector b
 
 t_fvector	v_add(t_fvector a, t_fvector b)
 {

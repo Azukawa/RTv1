@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:28:59 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 11:43:30 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 21:16:15 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	skip_white(int *i, char *str)
 		*i += 1;
 }
 
-t_bool	parse_quantity(t_doom *doom, char *str)
+t_bool	parse_quantity(t_rt *rt, char *str)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
 	if (str[i++] != 'q')
@@ -28,36 +29,37 @@ t_bool	parse_quantity(t_doom *doom, char *str)
 	skip_white(&i, str);
 	if (str[i] >= '1' && str[i] <= '9')
 	{
-		doom->object_count = ft_atoi(&str[i]);
+		c = str[i];
+		rt->object_count = ft_atoi(c);
 		return (TRUE);
 	}
 	else
 		return (FALSE);
 }
 
-t_bool	parse_type(t_doom *doom, char *str, int index, int i)
+t_bool	parse_type(t_rt *rt, char *str, int index, int i)
 {
 	if (str[i++] != 't')
 		return (FALSE);
 	skip_white(&i, str);
 	if (str[i] == 's')
 	{
-		doom->object[index].type = SPHERE;
+		rt->object[index].type = SPHERE;
 		return (TRUE);
 	}
 	else if (str[i] == '^')
 	{
-		doom->object[index].type = CONE;
+		rt->object[index].type = CONE;
 		return (TRUE);
 	}
 	else if (str[i] == 'c')
 	{
-		doom->object[index].type = CYL;
+		rt->object[index].type = CYL;
 		return (TRUE);
 	}
 	else if (str[i] == 'p')
 	{
-		doom->object[index].type = PLANE;
+		rt->object[index].type = PLANE;
 		return (TRUE);
 	}
 	return (FALSE);

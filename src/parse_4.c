@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 22:13:37 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 12:45:18 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 20:58:06 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool static	str_to_rot(int *i, char *str, float *pos)
 	return (FALSE);
 }
 
-t_bool	parse_c_pos(t_doom *doom, char *str)
+t_bool	parse_c_pos(t_rt *rt, char *str)
 {
 	int	i;
 
@@ -44,16 +44,16 @@ t_bool	parse_c_pos(t_doom *doom, char *str)
 	if (str[i++] != 'P')
 		return (FALSE);
 	skip_white(&i, str);
-	if (!str_to_int(&i, str, &doom->cam.pos.x))
+	if (!str_to_int(&i, str, &rt->cam.pos.x))
 		return (FALSE);
-	if (!str_to_int(&i, str, &doom->cam.pos.y))
+	if (!str_to_int(&i, str, &rt->cam.pos.y))
 		return (FALSE);
-	if (!str_to_int(&i, str, &doom->cam.pos.z))
+	if (!str_to_int(&i, str, &rt->cam.pos.z))
 		return (FALSE);
 	return (TRUE);
 }
 
-t_bool	parse_c_dir(t_doom *doom, char *str)
+t_bool	parse_c_dir(t_rt *rt, char *str)
 {
 	int	i;
 
@@ -61,11 +61,11 @@ t_bool	parse_c_dir(t_doom *doom, char *str)
 	if (str[i++] != 'R')
 		return (FALSE);
 	skip_white(&i, str);
-	if (!str_to_rot(&i, str, &doom->cam.rot.x))
+	if (!str_to_rot(&i, str, &rt->cam.rot.x))
 		return (FALSE);
-	if (!str_to_rot(&i, str, &doom->cam.rot.y))
+	if (!str_to_rot(&i, str, &rt->cam.rot.y))
 		return (FALSE);
-	if (!str_to_rot(&i, str, &doom->cam.rot.z))
+	if (!str_to_rot(&i, str, &rt->cam.rot.z))
 		return (FALSE);
 	return (TRUE);
 }
