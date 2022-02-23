@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/23 18:05:47 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 19:20:17 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	loop(t_doom	*doom)
 	}
 }
 
-int	main1(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_doom		doom;
 
@@ -70,10 +70,4 @@ int	main1(int argc, char **argv)
 			loop(&doom);
 	cleanup(&doom);
 	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	main1(argc, argv);
-	system("leaks -q RTv1");
 }
