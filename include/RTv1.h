@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/23 18:21:06 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 19:46:24 by alero            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 # include <stddef.h>
 //SDL
 # include "../libSDL2/include/SDL2/SDL.h"
-//libft
-//# include "../libft/includes/libft.h"
-//# include "../libft/includes/ft_gfx.h"
-//doom
+//RTv1
 # include "defines.h"
 
 # define DEG_TO_RAD 0.01745329251
