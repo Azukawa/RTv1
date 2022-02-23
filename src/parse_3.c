@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:28:59 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/23 21:16:15 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 21:20:47 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	parse_quantity(t_rt *rt, char *str)
 	if (str[i] >= '1' && str[i] <= '9')
 	{
 		c = str[i];
-		rt->object_count = ft_atoi(c);
+		rt->object_count = ft_atoi(&c);
 		return (TRUE);
 	}
 	else
