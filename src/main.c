@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:12:47 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/22 20:04:22 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 18:05:47 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,10 @@ void	draw_to_window(t_doom *doom)
 	SDL_RenderPresent(doom->rend.renderer);
 }
 
-/*
-*	Note about SDL_LockTexture: void **px is 'filled in', meaning that SDL
-*	creates its own allocated pixel buffer thats returned to the given pointer.
-*	This is why you need to query for the pixel_pitch too since its the only
-*	way to know the 1-directional pitch of the created buffer.
-*/
 static void	loop(t_doom	*doom)
 {
 	SDL_Event	e;
 
-//	SDL_WaitEvent(&e);
-//	if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE)
-//		doom->rend.run = FALSE;
 	keyevent(doom, &e);
 	if (doom->run == TRUE)
 	{

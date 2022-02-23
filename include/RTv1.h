@@ -6,7 +6,7 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 21:28:19 by eniini            #+#    #+#             */
-/*   Updated: 2022/02/22 13:39:11 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 18:21:06 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,6 @@ float		two_point_dist(t_fvector a, t_fvector b);
 void		quadratic_equation(t_fvector abc, float *t0, float *t1);
 float		ft_fmin(float a, float b);
 float		ft_fmax(float a, float b);
-t_bool		plane_intersect_point(t_fvector ray, t_fvector ray_origin, \
-t_fvector	 planenormal, t_fvector planepoint, t_fvector *ret);
-t_bool		old_ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_plane_intersect(t_ray *r, t_object *p, float *t);
 t_bool		ray_sphere_intersect(t_ray *r, t_object *s, float *t);
 t_bool		ray_cyl_intersect(t_ray *r, t_object *obj, float *result);

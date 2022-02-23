@@ -6,45 +6,11 @@
 /*   By: esukava <esukava@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 11:11:07 by esukava           #+#    #+#             */
-/*   Updated: 2022/02/20 23:06:29 by esukava          ###   ########.fr       */
+/*   Updated: 2022/02/23 16:55:51 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RTv1.h"
-
-void	print_array(t_doom *doom)
-{
-	int	i;
-
-	i = 0;
-	while (i < doom->scene_len)
-	{
-		printf("%s\n", doom->scene[i]);
-		i++;
-	}
-}
-
-void	print_stuff(t_doom *doom)
-{
-	int i = 0;
-
-	printf("scene_len = %d\n", doom->scene_len);
-	printf("\nobject_count = %d\n", doom->object_count);
-	printf("light\tposx = %f posy = %f posz = %f\n", doom->object[9].pos.x, doom->object[9].pos.y, doom->object[9].pos.z);
-	printf("cam\tposx = %f posy = %f posz = %f\n", doom->cam.pos.x, doom->cam.pos.y, doom->cam.pos.z);
-	printf("cam\trotx = %f roty = %f rotz = %f\n\n", doom->cam.rot.x, doom->cam.rot.y, doom->cam.rot.z);
-
-	while(i < doom->object_count && i < 9)
-	{
-		printf("object[%d] type\t= %d\n",i , doom->object[i].type);
-		printf("object[%d] posx\t= %f posy = %f posz = %f\n", i, doom->object[i].pos.x, doom->object[i].pos.y, doom->object[i].pos.z);
-		printf("object[%d] dirx\t= %f diry = %f dirz = %f\n", i, doom->object[i].dir.x, doom->object[i].dir.y, doom->object[i].dir.z);
-		printf("object[%d] r\t= %f\n", i, doom->object[i].r);
-		printf("object[%d] mater = %d\n", i, doom->object[i].material);
-		printf("object[%d] angle\t= %f\n\n", i, doom->object[i].angle);
-		i++;
-	}
-}
 
 t_bool	saveline(char *ret, char *str)
 {
@@ -131,7 +97,5 @@ t_bool	parse(char *str, t_doom *doom)
 		j++;
 		i++;
 	}
-	print_array(doom);
-	print_stuff(doom);
 	return (TRUE);
 }
