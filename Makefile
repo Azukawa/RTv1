@@ -60,7 +60,7 @@ clean:
 	rm -rf DATA
 
 fclean: clean
-	rm $(NAME)
+	rm -f $(NAME)
 	rm -rf $(SDL_SRC_DIR)
-
+	rm -rf $(SDL_DIR)
 re: fclean all
